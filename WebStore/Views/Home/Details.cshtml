@@ -1,0 +1,14 @@
+﻿@model WebStore.Models.EmployeeView
+
+<hr />
+<table class="table table-bordered">
+    <tr>
+        <td>@Model.FirstName</td>
+        <td>@Model.SurName</td>
+        <td>@Model.Patronymic</td>
+        <td>@Model.Age</td>
+    </tr>
+    <tr>
+        <td>@Html.ActionLink("Back", "Index")</td>
+    </tr>
+</table>
