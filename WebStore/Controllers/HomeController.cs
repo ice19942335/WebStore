@@ -10,36 +10,56 @@ namespace WebStore.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly List<EmployeeView> _employees = new List<EmployeeView>
-        {
-            new EmployeeView
-            {
-                Id = 1,
-                FirstName = "Иван",
-                SurName = "Иванов",
-                Patronymic = "Иванович",
-                Age = 22
-            },
-            new EmployeeView
-            {
-                Id = 2,
-                FirstName = "Владислав",
-                SurName = "Петров",
-                Patronymic = "Иванович",
-                Age = 35
-            }
-        };
 
         public IActionResult Index()
         {
-            return View(_employees);
+            return View();
         }
 
-        public IActionResult Details(int id)
+        public IActionResult Shop()
         {
-            var employee = _employees.Find(e => e.Id == id);
-
-            return View(employee);
+            return View();
         }
+
+        public IActionResult ProductDetails()
+        {
+            return View();
+        }
+
+        public IActionResult Login()
+        {
+            return View();
+        }
+
+        public IActionResult ContactUs()
+        {
+            return View();
+        }
+
+        public IActionResult Checkout()
+        {
+            return View();
+        }
+
+        public IActionResult Cart()
+        {
+            return View();
+        }
+
+        public IActionResult BlogSingle()
+        {
+            return View();
+        }
+
+        public IActionResult Blog()
+        {
+            return View();
+        }
+
+        //public IActionResult NotFound()
+        //{
+        //    return View();
+        //}
+
     }
 }
