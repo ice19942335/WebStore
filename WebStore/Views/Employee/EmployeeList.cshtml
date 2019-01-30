@@ -1,0 +1,14 @@
+﻿@model IEnumerable<WebStore.Models.EmployeeView>
+
+<table class="table table-bordered">
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.FirstName</td>
+            <td>@item.SurName</td>
+            @*<td>@item.Patronymic</td>*@
+            @*<td>@item.Age</td>*@
+            <td><a asp-action="Details" asp-route-id="@item.Id">Details</a></td>
+        </tr>
+    }
+</table>

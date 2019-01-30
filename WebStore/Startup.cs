@@ -11,7 +11,10 @@ using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
+using SmartBreadcrumbs;
 using WebStore.Controllers;
+using WebStore.Infrastructure.Implementations;
+using WebStore.Infrastructure.Interfaces;
 
 namespace WebStore
 {
@@ -37,6 +40,12 @@ namespace WebStore
         {
             //Добавляем сервисы, необходимые для mvc
             services.AddMvc();
+
+            //BreadCrumps
+            services.UseBreadcrumbs(GetType().Assembly);
+
+            // Добавляем разрешение зависимости
+            services.AddSingleton<IEmployeesData, InMemoryEmployeesData>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -52,6 +61,9 @@ namespace WebStore
             // подключаем статические файлы
             app.UseStaticFiles();
             // добавляем поддержку каталога node_modules
+
+            app.UseWelcomePage("/welcome");
+
             app.UseFileServer(new FileServerOptions()
             {
                 FileProvider = new PhysicalFileProvider(
@@ -61,10 +73,6 @@ namespace WebStore
                 EnableDirectoryBrowsing = false
             });
 
-            ////Добавляем расширение для использования статических файлов, т.к. appsettings.json - это статический файл
-            //app.UseStaticFiles();
-            //var hello = Configuration["CustomHelloWorld"];
-
             app.UseMvc(routes => 
             {
                 routes.MapRoute(
@@ -72,6 +80,10 @@ namespace WebStore
                     template: "{controller=Home}/{action=Index}/{id?}"
                 );
             });
+
+            
         }
+
+
     }
 }
