@@ -1,14 +1,20 @@
-﻿@model IEnumerable<WebStore.Models.EmployeeView>
+﻿@model IEnumerable<EmployeeView>
+
+<hr />
+<a class="btn btn-primary" asp-controller="Employee" asp-action="Edit" role="button">Добавить</a>
+<hr />
 
 <table class="table table-bordered">
     @foreach (var item in Model)
     {
         <tr>
+            <td><a asp-action="Edit" asp-route-id="@item.Id"><i class="fa fa-edit"></i></a></td>
             <td>@item.FirstName</td>
             <td>@item.SurName</td>
-            @*<td>@item.Patronymic</td>*@
-            @*<td>@item.Age</td>*@
-            <td><a asp-action="Details" asp-route-id="@item.Id">Details</a></td>
+            <td>@item.Patronymic</td>
+            <td>@item.Age</td>
+            <td><a asp-action="Details" asp-route-id="@item.Id">Детали</a></td>
+            <td><a asp-action="Delete" asp-route-id="@item.Id"><i class="fa fa-cut">  Удалить</i></a></td>
         </tr>
     }
 </table>

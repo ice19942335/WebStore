@@ -22,26 +22,8 @@
         <td>@Model.Age</td>
     </tr>
     <tr>
-        <td>
-            Редактировать
-        </td>
-        <td>
-            <form method="get" asp-action="Commit" asp-route-id="@Model.Id">
-                <table>
-                    <tr>
-                        <td><input type="text" name="firstName" required placeholder="Имя" /></td>
-                        <td><input type="text" name="sureName" required placeholder="Фамилия" /></td>
-                        <td><input type="text" name="patronymic" required placeholder="Отчество" /></td>
-                        <td><input type="number" name="age" required placeholder="Возраст" /></td>
-                        <td><input type="submit" value="Сохранить" /></td>
-                    </tr>
-                </table>
-            </form>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            <a asp-action="EmployeeList">Назад к списку</a>
-        </td>
+        <td>Профессия</td>
+        <td>@Model.Position</td>
     </tr>
 </table>
+<a class="btn btn-primary" asp-controller="Employee" asp-action="EmployeeList" role="button">Назад к списку</a>
