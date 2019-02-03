@@ -58,15 +58,6 @@ namespace WebStore.Controllers
         [Route("edit/{id?}")]
         public IActionResult Edit(EmployeeView model)
         {
-            if (model.FirstName.Length <= 1)
-                ModelState.AddModelError("FirstName", "Имя должно содержать минимум 2 символа");
-            else if (model.SurName.Length <= 1)
-                ModelState.AddModelError("SurName", "Фамилия должна содержать минимум 2 символа");
-            else if (model.Age < 16)
-                ModelState.AddModelError("Age", "Сотруднику должно быть минимум 16 полных лет");
-            else if (model.Position == null)
-                ModelState.AddModelError("Position", "У сотрудника долджна быть должность");
-
             if (model.Id > 0)
             {
                 var dbItem = _employeesData.GetById(model.Id);
