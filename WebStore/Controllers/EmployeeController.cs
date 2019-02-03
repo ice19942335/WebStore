@@ -36,11 +36,6 @@ namespace WebStore.Controllers
             return View(employee);
         }
 
-        public IActionResult Commit()
-        {
-            return NotFound();
-        }
-
         [Route("edit/{id?}")]
         public IActionResult Edit(int? id)
         {
@@ -63,6 +58,15 @@ namespace WebStore.Controllers
         [Route("edit/{id?}")]
         public IActionResult Edit(EmployeeView model)
         {
+            if (model.FirstName.Length <= 1)
+                ModelState.AddModelError("FirstName", "Имя должно содержать минимум 2 символа");
+            else if (model.SurName.Length <= 1)
+                ModelState.AddModelError("SurName", "Фамилия должна содержать минимум 2 символа");
+            else if (model.Age < 16)
+                ModelState.AddModelError("Age", "Сотруднику должно быть минимум 16 полных лет");
+            else if (model.Position == null)
+                ModelState.AddModelError("Position", "У сотрудника долджна быть должность");
+
             if (model.Id > 0)
             {
                 var dbItem = _employeesData.GetById(model.Id);
@@ -70,19 +74,30 @@ namespace WebStore.Controllers
                 if (ReferenceEquals(dbItem, null))
                     return NotFound();// возвращаем результат 404 Not Found
 
-                dbItem.FirstName = model.FirstName;
-                dbItem.SurName = model.SurName;
-                dbItem.Age = model.Age;
-                dbItem.Patronymic = model.Patronymic;
-                dbItem.Position = model.Position;
+                if (ModelState.IsValid)
+                {
+                    dbItem.FirstName = model.FirstName;
+                    dbItem.SurName = model.SurName;
+                    dbItem.Age = model.Age;
+                    dbItem.Patronymic = model.Patronymic;
+                    dbItem.Position = model.Position;
+                }
             }
             else
             {
-                _employeesData.AddNew(model);
+                if (ModelState.IsValid)
+                    AddNew(model);
             }
-            //_employeesData.Commit();
 
-            return RedirectToAction(nameof(EmployeeList));
+            if (ModelState.IsValid)
+                return RedirectToAction(nameof(EmployeeList));
+            else
+                return View("Edit", model);
+        }
+
+        public void AddNew(EmployeeView model)
+        {
+            _employeesData.AddNew(model);
         }
 
         [Route("delete/{id}")]

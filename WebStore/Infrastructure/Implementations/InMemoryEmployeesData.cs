@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 using WebStore.Infrastructure.Interfaces;
 using WebStore.Models;
 
@@ -29,34 +30,6 @@ namespace WebStore.Infrastructure.Implementations
         public EmployeeView GetById(int id)
         {
             return _employees.FirstOrDefault(e => e.Id.Equals(id));
-        }
-
-        public bool Commit(int id, string firstName = "null", string sureName = "null", string patronymic = "null", int age = -1)
-        {
-            //Получаем сотрудника по Id
-            var employee = _employees.FirstOrDefault(t => t.Id.Equals(id));
-            //Если такого не существует
-            if (ReferenceEquals(employee, null))
-                return false;
-
-            if (firstName != "null" && sureName != "null" && patronymic != "null" && age != -1)
-            {
-                EmployeeView emp = _employees.ElementAt(_employees.FindIndex(e => e.Id == id));
-                if (emp != null)
-                {
-                    emp.Id = id;
-                    emp.FirstName = firstName;
-                    emp.SurName = sureName;
-                    emp.Patronymic = patronymic;
-                    emp.Age = age;
-                }
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-            
         }
 
         public void AddNew(EmployeeView model)

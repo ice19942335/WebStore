@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 using WebStore.Models;
 
 namespace WebStore.Infrastructure.Interfaces
@@ -20,11 +21,6 @@ namespace WebStore.Infrastructure.Interfaces
         /// <param name="id">Id</param>
         /// <returns></returns>
         EmployeeView GetById(int id);
-
-        /// <summary>
-        /// Сохранить изменения
-        /// </summary>
-        bool Commit(int id, string firstName = "null", string sureName = "null", string patronymic = "null", int age = -1);
 
         /// <summary>
         /// Добавить нового

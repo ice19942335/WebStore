@@ -1,9 +1,0 @@
-{
-  "version": "1.0.0",
-  "name": "asp.net",
-  "private": true,
-  "devDependencies": {
-    "bootstrap": "3.3.7",
-    "jquery": "2.2.0"
-  }
-}

@@ -40,14 +40,14 @@ namespace WebStore.Controllers
             return View();
         }
 
-        [Breadcrumb("Contact us")]
-        public IActionResult ContactUs()
+        [Breadcrumb("Checkout", FromAction = "Home.Cart")]
+        public IActionResult Checkout()
         {
             return View();
         }
 
-        [Breadcrumb("Checkout", FromAction = "Home.Cart")]
-        public IActionResult Checkout()
+        [Breadcrumb("Contact us")] // сделать потомком [Breadcrumb("Contact us", FromAction = "Home.Checkout")]
+        public IActionResult ContactUs()
         {
             return View();
         }

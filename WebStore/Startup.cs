@@ -64,14 +64,14 @@ namespace WebStore
 
             app.UseWelcomePage("/welcome");
 
-            app.UseFileServer(new FileServerOptions()
-            {
-                FileProvider = new PhysicalFileProvider(
-                    Path.Combine(env.ContentRootPath, "node_modules")
-                ),
-                RequestPath = "/node_modules",
-                EnableDirectoryBrowsing = false
-            });
+            //app.UseFileServer(new FileServerOptions()
+            //{
+            //    FileProvider = new PhysicalFileProvider(
+            //        Path.Combine(env.ContentRootPath, "node_modules")
+            //    ),
+            //    RequestPath = "/node_modules",
+            //    EnableDirectoryBrowsing = false
+            //});
 
             app.UseMvc(routes => 
             {
