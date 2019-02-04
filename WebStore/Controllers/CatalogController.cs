@@ -36,7 +36,7 @@ namespace WebStore.Controllers
                     Price = p.Price
                 }).OrderBy(p => p.Order).ToList()
             };
-
+            //
             return View(model);
         }
     }
