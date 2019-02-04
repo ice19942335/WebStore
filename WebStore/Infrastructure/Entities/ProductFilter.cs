@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace WebStore.Models
+﻿namespace WebStore.Infrastructure.Entities
 {
     /// <summary>
     /// Класс для фильтрации товаров

@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using WebStore.Domain.Entities.Base;
+﻿using WebStore.Domain.Entities.Base;
 using WebStore.Domain.Entities.Base.Interfaces;
 
-namespace WebStore.Models
+namespace WebStore.Infrastructure.Entities
 {
     /// <inheritdoc cref="NamedEntity" />
     /// <summary>
