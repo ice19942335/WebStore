@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using SmartBreadcrumbs;
 using WebStore.Infrastructure.Interfaces;
 using WebStore.Models;
 
@@ -18,11 +19,13 @@ namespace WebStore.Controllers
             _employeesData = employeesData;
         }
 
+        [Breadcrumb("EmployeeList")]
         public IActionResult EmployeeList()
         {
             return View(_employeesData.GetAll());
         }
 
+        [Breadcrumb("Employee details")]
         public IActionResult Details(int id)
         {
             // Получаем сотрудника по Id
@@ -36,6 +39,7 @@ namespace WebStore.Controllers
             return View(employee);
         }
 
+        [Breadcrumb("Add-Edit")]
         [Route("edit/{id?}")]
         public IActionResult Edit(int? id)
         {

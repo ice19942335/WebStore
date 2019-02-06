@@ -22,17 +22,12 @@ namespace WebStore.Controllers
             return View();
         }
 
-        [Breadcrumb("Shop")]
-        public IActionResult Shop()
-        {
-            return View();
-        }
 
-        [Breadcrumb("ProductDetails")]
-        public IActionResult ProductDetails()
-        {
-            return View();
-        }
+        //[Breadcrumb("ProductDetails")]
+        //public IActionResult ProductDetails()
+        //{
+        //    return View();
+        //}
 
         [Breadcrumb("Login")]
         public IActionResult Login()

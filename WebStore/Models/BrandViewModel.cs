@@ -1,4 +1,4 @@
-﻿using WebStore.Domain.Entities.Base.Interfaces;
+﻿using WebStore.Entities.Entities.Base.Interfaces;
 
 namespace WebStore.Models
 {

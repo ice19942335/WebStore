@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
-using WebStore.Domain.Entities.Base.Interfaces;
+using WebStore.Entities.Entities.Base.Interfaces;
 
-namespace WebStore.Domain.Entities.Base
+namespace WebStore.Entities.Entities.Base
 {
     public class BaseEntity : IBaseEntity
     {

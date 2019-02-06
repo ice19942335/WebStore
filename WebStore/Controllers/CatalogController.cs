@@ -4,7 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using WebStore.Infrastructure.Entities;
+using SmartBreadcrumbs;
+using WebStore.Entities.Entities;
 using WebStore.Infrastructure.Interfaces;
 using WebStore.Models;
 
@@ -19,6 +20,7 @@ namespace WebStore.Controllers
             _productData = productData;
         }
 
+        [Breadcrumb("Shop")]
         public IActionResult Shop(int? sectionId, int? brandId)
         {
             var products = _productData.GetProducts(new ProductFilter {BrandId = brandId, SectionId = sectionId});
@@ -36,7 +38,7 @@ namespace WebStore.Controllers
                     Price = p.Price
                 }).OrderBy(p => p.Order).ToList()
             };
-            //
+
             return View(model);
         }
     }

@@ -1,4 +1,4 @@
-﻿namespace WebStore.Infrastructure.Entities
+﻿namespace WebStore.Entities.Entities
 {
     /// <summary>
     /// Класс для фильтрации товаров
