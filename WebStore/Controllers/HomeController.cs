@@ -14,23 +14,11 @@ using WebStore.Models;
 
 namespace WebStore.Controllers
 {
+
     public class HomeController : Controller
     {
         [DefaultBreadcrumb("Home")]
         public IActionResult Index()
-        {
-            return View();
-        }
-
-
-        //[Breadcrumb("ProductDetails")]
-        //public IActionResult ProductDetails()
-        //{
-        //    return View();
-        //}
-
-        [Breadcrumb("Login")]
-        public IActionResult Login()
         {
             return View();
         }

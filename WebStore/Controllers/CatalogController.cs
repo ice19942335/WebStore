@@ -41,5 +41,11 @@ namespace WebStore.Controllers
 
             return View(model);
         }
+
+        [DefaultBreadcrumb("Details")]
+        public IActionResult ProductDetails()
+        {
+            return View();
+        }
     }
 }

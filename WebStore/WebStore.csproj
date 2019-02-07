@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\WebStore.DAL\WebStore.DAL.csproj" />
+    <ProjectReference Include="..\WebStore.DomainNew\WebStore.DomainNew.csproj" />
     <ProjectReference Include="..\WebStore.Entities\WebStore.Entities.csproj" />
   </ItemGroup>
 

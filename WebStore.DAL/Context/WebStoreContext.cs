@@ -1,9 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
+using WebStore.DomainNew.Entities;
 using WebStore.Entities.Entities;
 
 namespace WebStore.DAL.Context
 {
-    public class WebStoreContext : DbContext
+    public class WebStoreContext : IdentityDbContext<User>
     {
         public WebStoreContext(DbContextOptions options) : base(options)
         { }
@@ -13,6 +15,5 @@ namespace WebStore.DAL.Context
         public DbSet<Section> Sections { get; set; }
 
         public DbSet<Brand> Brands { get; set; }
-
     }
 }
