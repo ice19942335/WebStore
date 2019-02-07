@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 
 namespace WebStore.Models.Account
 {
-    public class RegisterUserViewModel
+    public class LoginUserViewModel
     {
         [Required(ErrorMessage = "Имя пользователя является обязательным", AllowEmptyStrings = false), MaxLength(256, ErrorMessage = "Длина имени ограничена 256 символами")]
         [Display(Name = "Имя пользователя")]
@@ -16,8 +17,10 @@ namespace WebStore.Models.Account
         [Display(Name = "Пароль")]
         public string Password { get; set; }
 
-        [Required(ErrorMessage = "Отсутствует подтверждение пароля"), DataType(DataType.Password), Compare(nameof(Password))]
-        [Display(Name = "Подтверждение пароля")]
-        public string ConfirmPassword { get; set; }
+        [Display(Name = "Запомнить?")]
+        public bool RememberMe { get; set; }
+
+        [HiddenInput(DisplayValue = false)]
+        public string ReturnUrl { get; set; }
     }
 }
