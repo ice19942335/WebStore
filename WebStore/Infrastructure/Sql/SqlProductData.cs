@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using WebStore.DAL.Context;
 using WebStore.Entities.Entities;
 using WebStore.Infrastructure.Interfaces;
@@ -35,6 +36,12 @@ namespace WebStore.Infrastructure.Sql
             if (filter.SectionId.HasValue)
                 query = query.Where(c => c.SectionId.Equals(filter.SectionId.Value)); return query.ToList();
         }
+
+        public Product GetProductById(int id)
+        {
+            return _context.Products.Include("Brand").Include("Section").FirstOrDefault(p => p.Id.Equals(id));
+        }
+
     }
 
 }
