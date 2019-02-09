@@ -13,13 +13,13 @@ namespace WebStore.Controllers
 {
     public class AccountController : Controller
     {
-        private readonly UserManager<User> _UserManager;
-        private readonly SignInManager<User> _SignInManager;
+        private readonly UserManager<User> _userManager;
+        private readonly SignInManager<User> _signInManager;
 
-        public AccountController(UserManager<User> UserManager, SignInManager<User> SignInManager)
+        public AccountController(UserManager<User> userManager, SignInManager<User> SignInManager)
         {
-            _UserManager = UserManager;
-            _SignInManager = SignInManager;
+            _userManager = userManager;
+            _signInManager = SignInManager;
         }
 
         [HttpGet] public IActionResult Login() => View(new LoginUserViewModel());
@@ -28,9 +28,9 @@ namespace WebStore.Controllers
         public async Task<IActionResult> Login(LoginUserViewModel model)
         {
             if (!ModelState.IsValid) return View(model);
-            var login_result = await _SignInManager.PasswordSignInAsync(
+            var loginResult = await _signInManager.PasswordSignInAsync(
                 model.UserName, model.Password, model.RememberMe, false);
-            if (login_result.Succeeded)
+            if (loginResult.Succeeded)
                 return Url.IsLocalUrl(model.ReturnUrl)
                     ? RedirectToAction(model.ReturnUrl)
                     : RedirectToAction("Index", "Home");
@@ -38,7 +38,6 @@ namespace WebStore.Controllers
             return View(model);
         }
 
-        #region public IActionResult Register() => View(new RegisterUserViewModel());
         [HttpGet]
         public IActionResult Register() => View(new RegisterUserViewModel());
 
@@ -47,23 +46,23 @@ namespace WebStore.Controllers
         {
             if (!ModelState.IsValid) return View(model);
             var user = new User { UserName = model.UserName };
-            var creation_result = await _UserManager.CreateAsync(user, model.Password);
-            if (creation_result.Succeeded)
+            var creationResult = await _userManager.CreateAsync(user, model.Password);
+            if (creationResult.Succeeded)
             {
-                await _SignInManager.SignInAsync(user, false);
+                await _signInManager.SignInAsync(user, false);
+                await _userManager.AddToRoleAsync(user, "User");
                 return RedirectToAction(nameof(HomeController.Index), "Home");
             }
 
-            foreach (var identity_error in creation_result.Errors)
-                ModelState.AddModelError("", identity_error.Description);
+            foreach (var identityError in creationResult.Errors)
+                ModelState.AddModelError("", identityError.Description);
 
             return View(model);
         }
-        #endregion
 
         public async Task<IActionResult> Logout()
         {
-            await _SignInManager.SignOutAsync();
+            await _signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
         }
     }

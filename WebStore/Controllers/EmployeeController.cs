@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SmartBreadcrumbs;
@@ -41,6 +42,7 @@ namespace WebStore.Controllers
 
         [Breadcrumb("Add-Edit")]
         [Route("edit/{id?}")]
+        [Authorize(Roles = "Admin")]
         public IActionResult Edit(int? id)
         {
             EmployeeView model;
@@ -60,6 +62,7 @@ namespace WebStore.Controllers
 
         [HttpPost]
         [Route("edit/{id?}")]
+        [Authorize(Roles = "Admin")]
         public IActionResult Edit(EmployeeView model)
         {
             if (model.Id > 0)
@@ -96,6 +99,7 @@ namespace WebStore.Controllers
         }
 
         [Route("delete/{id}")]
+        [Authorize(Roles = "Admin")]
         public IActionResult Delete(int id)
         {
             _employeesData.Delete(id);
