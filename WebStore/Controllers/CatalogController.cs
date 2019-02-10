@@ -29,7 +29,7 @@ namespace WebStore.Controllers
             {
                 BrandId = brandId,
                 SectionId = sectionId,
-                Products = products.Select(p => new ProductViewModel()
+                Products = products.Select(p => new ProductViewModel
                 {
                     Id = p.Id,
                     ImageUrl = p.ImageUrl,
@@ -42,7 +42,7 @@ namespace WebStore.Controllers
             return View(model);
         }
 
-        [DefaultBreadcrumb("Details")]
+        [Breadcrumb("Product details")]
         public IActionResult ProductDetails(int id)
         {
             var product = _productData.GetProductById(id);

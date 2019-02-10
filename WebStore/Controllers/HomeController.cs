@@ -18,45 +18,22 @@ namespace WebStore.Controllers
     public class HomeController : Controller
     {
         [DefaultBreadcrumb("Home")]
-        public IActionResult Index()
-        {
-            return View();
-        }
+        public IActionResult Index() => View();
 
-        [Breadcrumb("Checkout", FromAction = "Home.Cart")]
-        public IActionResult Checkout()
-        {
-            return View();
-        }
+        //[Breadcrumb("Checkout", FromAction = "Home.Cart")]
+        [Breadcrumb("Checkout")]
+        public IActionResult Checkout() => View();
 
         [Breadcrumb("Contact us")] // сделать потомком [Breadcrumb("Contact us", FromAction = "Home.Checkout")]
-        public IActionResult ContactUs()
-        {
-            return View();
-        }
-
-        [Breadcrumb("Cart")]
-        public IActionResult Cart()
-        {
-            return View();
-        }
+        public IActionResult ContactUs() => View();
 
         [Breadcrumb("Blog page")]
-        public IActionResult BlogSingle()
-        {
-            return View();
-        }
+        public IActionResult BlogSingle() => View();
 
         [Breadcrumb("Blog list")]
-        public IActionResult Blog()
-        {
-            return View();
-        }
+        public IActionResult Blog() => View();
 
-        public IActionResult NotFound404()
-        {
-            return View();
-        }
+        public IActionResult NotFound404() => View();
 
     }
 }
