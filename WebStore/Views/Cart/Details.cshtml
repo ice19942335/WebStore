@@ -38,9 +38,9 @@
                         </td>
                         <td class="cart_quantity">
                             <div class="cart_quantity_button">
-                                <a asp-controller="Cart" asp-action="AddToCart" asp-route-id="@item.Key.Id" asp-route-returnUrl="@Context.Request.Path" class="cart_quantity_up"> + </a>
-                                <input class="cart_quantity_input" type="text" name="quantity" value="@item.Value" autocomplete="off" size="2">
                                 <a asp-controller="Cart" asp-action="DecrementFromCart" asp-route-id="@item.Key.Id" class="cart_quantity_down"> - </a>
+                                <input class="cart_quantity_input" type="text" name="quantity" value="@item.Value" autocomplete="off" size="2">
+                                <a asp-controller="Cart" asp-action="AddToCart" asp-route-id="@item.Key.Id" asp-route-returnUrl="@Context.Request.Path" class="cart_quantity_up"> + </a>
                             </div>
                         </td>
                         <td class="cart_total">
@@ -51,7 +51,6 @@
                         </td>
                     </tr>
                 }
-
             </tbody>
         </table>
     </div>
@@ -122,10 +121,36 @@
         <div class="col-sm-6">
             <div class="total_area">
                 <ul>
-                    <li>Cart Sub Total <span>$59</span></li>
-                    <li>Eco Tax <span>$2</span></li>
+                    <li>
+                        Products QTY:
+                        <span>
+                            @{
+                                int quantity = 0;
+                                foreach (var item in Model.Items)
+                                {
+                                    quantity += item.Value;
+                                }
+                            }
+                            @quantity
+                        </span>
+                    </li>
+                    <li>Eco Tax <span>Free</span></li>
                     <li>Shipping Cost <span>Free</span></li>
-                    <li>Total <span>$61</span></li>
+                    <li>
+                        Total <span>
+                            @{
+                                decimal price = 0;
+                                foreach (var item in Model.Items)
+                                {
+                                    for (int i = 0; i < item.Value; i++)
+                                    {
+                                        price += item.Key.Price;
+                                    }
+                                }
+                            }
+                            @price ₽
+                        </span>
+                    </li>
                 </ul>
                 <a class="btn btn-default update" href="">Update</a>
                 <a class="btn btn-default check_out" href="">Check Out</a>
