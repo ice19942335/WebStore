@@ -34,6 +34,5 @@ namespace WebStore.Controllers
         public IActionResult Blog() => View();
 
         public IActionResult NotFound404() => View();
-
     }
 }
