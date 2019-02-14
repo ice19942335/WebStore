@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebStore.DAL", "WebStore.DA
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebStore.Entities", "WebStore.Entities\WebStore.Entities.csproj", "{F888133F-5431-4E87-BD62-8E06A8E5C46D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebStore.DomainNew", "WebStore.DomainNew\WebStore.DomainNew.csproj", "{4D17575D-A99E-4887-A34D-DAB11B4B071D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebStore.DomainNew", "WebStore.DomainNew\WebStore.DomainNew.csproj", "{4D17575D-A99E-4887-A34D-DAB11B4B071D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

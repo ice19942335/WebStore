@@ -52,9 +52,8 @@ namespace WebStore
 
             //Добавляем разрешение зависимости
             services.AddSingleton<IEmployeesData, InMemoryEmployeesData>();
-            //services.AddSingleton<IProductData, InMemoryProductData>();
             services.AddScoped<IProductData, SqlProductData>();
-            services.AddScoped<IProductData, SqlProductData>();
+            services.AddScoped<IOrdersService, SqlOrdersService>();
 
             services.AddDbContext<WebStoreContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 

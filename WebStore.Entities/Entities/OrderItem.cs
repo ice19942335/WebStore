@@ -7,9 +7,9 @@ namespace WebStore.Entities.Entities
 {
     public class OrderItem : BaseEntity
     {
-        public virtual OrderItem Order { get; set; }
+        public virtual Order Order { get; set; }
         
-        public virtual  Product Product { get; set; }
+        public virtual Product Product { get; set; }
 
         public decimal Price { get; set; }
 

@@ -16,8 +16,8 @@ namespace WebStore.Entities.Entities
 
         public string Address { get; set; }
 
-        public  DateTime Date { get; set; }
+        public DateTime Date { get; set; }
 
-        public  virtual Collection<OrderItem> OrderItems { get; set; }
+        public virtual Collection<OrderItem> OrderItems { get; set; }
     }
 }
