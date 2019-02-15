@@ -8,6 +8,7 @@ namespace WebStore.Entities.Entities
     /// <summary>
     /// Сущность продукт
     /// </summary>
+    /// 
     [Table("Products")]
     public class Product : NamedEntity, IOrderedEntity
     {
@@ -16,7 +17,7 @@ namespace WebStore.Entities.Entities
         /// <summary>
         /// Секция к которой принадлежит товар
         /// </summary>
-        public int SectionId { get; set; }
+        public int? SectionId { get; set; }
 
         [ForeignKey("SectionId")]
         public virtual Section Section { get; set; }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace WebStore.Models
 {
-    public class EmployeeView
+    public class EmployeeViewModel
     {
         public int Id { get; set; }
 

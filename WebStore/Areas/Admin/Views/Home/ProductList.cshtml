@@ -1,14 +1,12 @@
-﻿@using WebStore.Areas.Admin.Models
-@model ProductListViewModel
-@*подключаем все tag-хелперы*@
-@addTagHelper "*, WebStore"
+﻿
+@model WebStore.Areas.Admin.Models.ProductListViewModel
 
 @{
     ViewData["Title"] = "Список продуктов";
 }
 
 <p>
-    <a asp-action="CreateProduct" asp-area="Admin">Create New</a>
+    <a asp-area="Admin" asp-controller="Home" asp-action="Edit">Create New</a>
 </p>
 <table class="table">
     <thead>

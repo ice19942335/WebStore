@@ -45,7 +45,7 @@ namespace WebStore.Controllers
         [Authorize(Roles = "Admin")]
         public IActionResult Edit(int? id)
         {
-            EmployeeView model;
+            EmployeeViewModel model;
             if (id.HasValue)
             {
                 model = _employeesData.GetById(id.Value);
@@ -54,7 +54,7 @@ namespace WebStore.Controllers
             }
             else
             {
-                model = new EmployeeView();
+                model = new EmployeeViewModel();
             }
 
             return View(model);
@@ -63,7 +63,7 @@ namespace WebStore.Controllers
         [HttpPost]
         [Route("edit/{id?}")]
         [Authorize(Roles = "Admin")]
-        public IActionResult Edit(EmployeeView model)
+        public IActionResult Edit(EmployeeViewModel model)
         {
             if (model.Id > 0)
             {
@@ -93,7 +93,7 @@ namespace WebStore.Controllers
                 return View("Edit", model);
         }
 
-        public void AddNew(EmployeeView model)
+        public void AddNew(EmployeeViewModel model)
         {
             _employeesData.AddNew(model);
         }

@@ -13,20 +13,20 @@ namespace WebStore.Infrastructure.Interfaces
         /// Получение списка сотрудников
         /// </summary>
         /// <returns></returns>
-        IEnumerable<EmployeeView> GetAll();
+        IEnumerable<EmployeeViewModel> GetAll();
 
         /// <summary>
         /// Получение сотрудника по id
         /// </summary>
         /// <param name="id">Id</param>
         /// <returns></returns>
-        EmployeeView GetById(int id);
+        EmployeeViewModel GetById(int id);
 
         /// <summary>
         /// Добавить нового
         /// </summary>
         /// <param name="model"></param>
-        void AddNew(EmployeeView model);
+        void AddNew(EmployeeViewModel model);
 
         /// <summary>
         /// Удалить

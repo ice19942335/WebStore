@@ -11,6 +11,7 @@ using WebStore.DAL.Context;
 using WebStore.DomainNew.Entities;
 using WebStore.Entities.Entities;
 using WebStore.Infrastructure.Interfaces;
+using WebStore.Models;
 
 namespace WebStore.Areas.Admin.Controllers
 {
@@ -19,11 +20,13 @@ namespace WebStore.Areas.Admin.Controllers
     {
         private readonly IProductData _productData;
         private readonly WebStoreContext _webStoreContext;
+        private readonly IProductDataAdmin _productDataAdmin;
 
-        public HomeController(IProductData productData, WebStoreContext webStoreContext)
+        public HomeController(IProductData productData, WebStoreContext webStoreContext, IProductDataAdmin productDataAdmin)
         {
             _productData = productData;
             _webStoreContext = webStoreContext;
+            _productDataAdmin = productDataAdmin;
         }
 
         public IActionResult Index()
@@ -40,7 +43,7 @@ namespace WebStore.Areas.Admin.Controllers
             var items = await productsList.Skip((page - 1) * pageSize).Take(pageSize).ToListAsync();
 
             PageViewModel pageViewModel = new PageViewModel(count, page, pageSize);
-            
+
             ProductListViewModel viewModel = new ProductListViewModel
             {
                 PageViewModel = pageViewModel,
@@ -50,8 +53,71 @@ namespace WebStore.Areas.Admin.Controllers
             return View(viewModel);
         }
 
-        public 
+        [Authorize(Roles = "Admin")]
+        public IActionResult Edit(int? id)
+        {
+            ProductViewModel newProductViewModel;
+            if (id.HasValue)
+            {
+                var model = _productData.GetProductById(id.Value);
+                if (ReferenceEquals(model, null))
+                    return NotFound();
 
+                newProductViewModel = new ProductViewModel
+                {
+                    Name = model.Name,
+                    Order = model.Order,
+                    ImageUrl = model.ImageUrl,
+                    Price = model.Price,
+                    SectionId = model.SectionId.Equals(null) ? null : model.SectionId,
+                    BrandId = model.BrandId.Equals(null) ? null : model.BrandId
+                };
+            }
+            else
+            {
+                newProductViewModel = new ProductViewModel();
+            }
+
+            return View("Edit", newProductViewModel);
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        public IActionResult Edit(ProductViewModel model)
+        {
+            if (model.Id > 0)
+            {
+                var dbItemProduct = _webStoreContext.Products.FirstOrDefault(e => e.Id.Equals(model.Id));
+
+                if (ReferenceEquals(dbItemProduct, null))
+                    return NotFound();
+
+                if (ModelState.IsValid)
+                {
+                    dbItemProduct.Name = model.Name;
+                    dbItemProduct.Order = model.Order;
+                    dbItemProduct.ImageUrl = model.ImageUrl;
+                    dbItemProduct.Price = model.Price;
+                    dbItemProduct.SectionId = model.SectionId.Equals(null) ? null : model.SectionId;
+                    dbItemProduct.BrandId = model.BrandId.Equals(null) ? null : model.BrandId;
+                }
+            }
+            else
+            {
+                if (ModelState.IsValid)
+                    AddNewProduct(model);
+            }
+
+            if (ModelState.IsValid)
+                return RedirectToAction(nameof(ProductList));
+            else
+                return View("Edit", model);
+        }
+
+        public void AddNewProduct(ProductViewModel dbItemProduct)
+        {
+            _productDataAdmin.Create(dbItemProduct);
+        }
     }
 
 }
