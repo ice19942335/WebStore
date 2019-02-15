@@ -36,7 +36,7 @@ namespace WebStore.Areas.Admin.Controllers
 
         public async Task<IActionResult> ProductList(int page = 1)
         {
-            int pageSize = 3;
+            int pageSize = 5;
             IQueryable<Product> productsList = _webStoreContext.Products;
 
             var count = await productsList.CountAsync();

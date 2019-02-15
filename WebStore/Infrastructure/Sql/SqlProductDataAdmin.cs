@@ -27,7 +27,7 @@ namespace WebStore.Infrastructure.Sql
                 var newProduct = new Product
                 {
                     Name = product.Name,
-                    Order = product.Order.Equals(null) ? 1 : product.Order,
+                    Order = _context.Products.Max(e => e.Order) + 1,
                     SectionId = product.SectionId,
                     BrandId = product.BrandId,
                     ImageUrl = product.ImageUrl,
