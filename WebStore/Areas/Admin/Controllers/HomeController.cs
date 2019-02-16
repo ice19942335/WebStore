@@ -56,29 +56,19 @@ namespace WebStore.Areas.Admin.Controllers
         [Authorize(Roles = "Admin")]
         public IActionResult Edit(int? id)
         {
-            ProductViewModel newProductViewModel;
+            ProductViewModel model;
             if (id.HasValue)
             {
-                var model = _productData.GetProductById(id.Value);
+                model = _productData.GetProductById(id.Value);
                 if (ReferenceEquals(model, null))
                     return NotFound();
-
-                newProductViewModel = new ProductViewModel
-                {
-                    Name = model.Name,
-                    Order = model.Order,
-                    ImageUrl = model.ImageUrl,
-                    Price = model.Price,
-                    SectionId = model.SectionId.Equals(null) ? null : model.SectionId,
-                    BrandId = model.BrandId.Equals(null) ? null : model.BrandId
-                };
             }
             else
             {
-                newProductViewModel = new ProductViewModel();
+                model = new ProductViewModel();
             }
 
-            return View("Edit", newProductViewModel);
+            return View("Edit", model);
         }
 
         [HttpPost]
@@ -87,20 +77,8 @@ namespace WebStore.Areas.Admin.Controllers
         {
             if (model.Id > 0)
             {
-                var dbItemProduct = _webStoreContext.Products.FirstOrDefault(e => e.Id.Equals(model.Id));
-
-                if (ReferenceEquals(dbItemProduct, null))
-                    return NotFound();
-
-                if (ModelState.IsValid)
-                {
-                    dbItemProduct.Name = model.Name;
-                    dbItemProduct.Order = model.Order;
-                    dbItemProduct.ImageUrl = model.ImageUrl;
-                    dbItemProduct.Price = model.Price;
-                    dbItemProduct.SectionId = model.SectionId.Equals(null) ? null : model.SectionId;
-                    dbItemProduct.BrandId = model.BrandId.Equals(null) ? null : model.BrandId;
-                }
+                if (_productDataAdmin.Edit(model))
+                    return RedirectToAction(nameof(ProductList));
             }
             else
             {

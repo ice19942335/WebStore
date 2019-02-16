@@ -46,9 +46,26 @@ namespace WebStore.Infrastructure.Sql
 
         }
 
-        public ProductViewModel Edit(ProductViewModel product)
+        public bool Edit(ProductViewModel model)
         {
-            throw new NotImplementedException();
+            using (var transaction = _context.Database.BeginTransaction())
+            {
+                var product = _context.Products.FirstOrDefault(e => e.Id.Equals(model.Id));
+
+                if (ReferenceEquals(product, null))
+                    return false;
+
+                product.Name = model.Name;
+                product.ImageUrl = model.ImageUrl;
+                product.Price = model.Price;
+                product.SectionId = model.SectionId.Equals(null) ? null : model.SectionId;
+                product.BrandId = model.BrandId.Equals(null) ? null : model.BrandId;
+
+                _context.SaveChanges();
+                transaction.Commit();
+            }
+
+            return true;
         }
 
         public void Delete(int id)

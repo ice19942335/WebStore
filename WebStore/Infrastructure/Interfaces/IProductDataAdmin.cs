@@ -11,7 +11,7 @@ namespace WebStore.Infrastructure.Interfaces
     {
         ProductViewModel Create(ProductViewModel product);
 
-        ProductViewModel Edit(ProductViewModel product);
+        bool Edit(ProductViewModel model);
 
         void Delete(int id);
 

@@ -99,9 +99,23 @@ namespace WebStore.Infrastructure.Implementations
             return products;
         }
 
-        public Product GetProductById(int id)
+        public ProductViewModel GetProductById(int id)
         {
-            return _products.FirstOrDefault(e => e.Id == id);
+            var product = _products.FirstOrDefault(e => e.Id == id);
+
+            ProductViewModel model = new ProductViewModel
+            {
+                Id = product.Id,
+                Name = product.Name,
+                Order = product.Order,
+                ImageUrl = product.ImageUrl,
+                Price = product.Price,
+                Brand = product.Brand.Name,
+                SectionId = product.SectionId,
+                BrandId = product.BrandId
+            };
+
+            return model;
         }
     }
 }

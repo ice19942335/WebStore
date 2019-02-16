@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using WebStore.DAL.Context;
 using WebStore.Entities.Entities;
 using WebStore.Infrastructure.Interfaces;
+using WebStore.Models;
 
 namespace WebStore.Infrastructure.Sql
 {
@@ -37,11 +38,26 @@ namespace WebStore.Infrastructure.Sql
                 query = query.Where(c => c.SectionId.Equals(filter.SectionId.Value)); return query.ToList();
         }
 
-        public Product GetProductById(int id)
+        public ProductViewModel GetProductById(int id)
         {
-            return _context.Products.Include("Brand").Include("Section").FirstOrDefault(p => p.Id.Equals(id));
-        }
 
+            var product = _context.Products.Include("Brand").Include("Section").FirstOrDefault(p => p.Id.Equals(id));
+
+            ProductViewModel model = new ProductViewModel
+            {
+                Id = product.Id,
+                Name = product.Name,
+                Order = product.Order,
+                ImageUrl = product.ImageUrl,
+                Price = product.Price,
+                Brand = product.Brand.Name,
+                SectionId = product.SectionId,
+                BrandId = product.BrandId
+            };
+
+            return model;
+
+        }
     }
 
 }

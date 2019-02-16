@@ -31,7 +31,20 @@ namespace WebStore.Infrastructure.Sql
 
         public Order CreateOrder(OrderViewModel orderModel, CartViewModel transformCart, string userName)
         {
-            var user = _userManager.FindByNameAsync(userName).Result;
+
+            User user = new User();
+            try
+            {
+                user = _userManager.FindByNameAsync(userName).Result;
+                if (user.Email.Equals(null))
+                    return new Order();
+            }
+            catch (Exception e)
+            {
+                    return new Order();
+            }
+            
+            
 
             using (var transaction = _context.Database.BeginTransaction())
             {
@@ -61,7 +74,6 @@ namespace WebStore.Infrastructure.Sql
                         Quantity = item.Value,
                         Product = product
                     };
-
                     _context.OrderItems.Add(orderItem);
                 }
 

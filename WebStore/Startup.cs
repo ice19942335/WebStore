@@ -65,12 +65,12 @@ namespace WebStore
             services.Configure<IdentityOptions>(options =>
             {
                 // Password settings
-                options.Password.RequiredLength = 6;
-                options.Password.RequiredUniqueChars = 4;
-                //options.Password.RequireDigit = true;
-                //options.Password.RequireLowercase = true;
+                options.Password.RequiredLength = 3;
+                options.Password.RequiredUniqueChars = 1;
+                options.Password.RequireDigit = true;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireUppercase = false;
                 options.Password.RequireNonAlphanumeric = false;
-                //options.Password.RequireUppercase = true;
 
 
                 // Lockout settings
