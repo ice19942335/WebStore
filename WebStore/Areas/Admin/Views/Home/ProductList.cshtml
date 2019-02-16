@@ -5,6 +5,7 @@
     ViewData["Title"] = "Список продуктов";
 }
 
+<hr>
 <p>
     <a asp-area="Admin" asp-controller="Home" asp-action="Edit">Create New</a>
 </p>
@@ -61,9 +62,9 @@
                     @Html.DisplayFor(modelItem => item.Price)
                 </td>
                 <td>
-                    @Html.ActionLink("Edit", "Edit", new { area = "Admin", id = item.Id }) |
-                    @Html.ActionLink("Details", "Details", new { area = "Admin", id = item.Id }) |
-                    @Html.ActionLink("Delete", "Delete", new { area = "Admin", id = item.Id })
+                    @Html.ActionLink("Edit", "ProductEdit", new { area = "Admin", id = item.Id }) |
+                    @Html.ActionLink("Details", "ProductDetails", new { area = "Admin", id = item.Id }) |
+                    @Html.ActionLink("Delete", "ProductDelete", new { area = "Admin", id = item.Id })
                 </td>
             </tr>
         }

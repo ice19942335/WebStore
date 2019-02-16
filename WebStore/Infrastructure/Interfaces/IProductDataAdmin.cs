@@ -11,10 +11,10 @@ namespace WebStore.Infrastructure.Interfaces
     {
         ProductViewModel Create(ProductViewModel product);
 
-        bool Edit(ProductViewModel model);
+        bool ProductEdit(ProductViewModel model);
 
-        void Delete(int id);
+        bool ProductDelete(int id);
 
-        void Details(int id);
+        ProductViewModel ProductDetails(int id);
     }
 }

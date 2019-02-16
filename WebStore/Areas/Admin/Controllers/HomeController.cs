@@ -54,7 +54,7 @@ namespace WebStore.Areas.Admin.Controllers
         }
 
         [Authorize(Roles = "Admin")]
-        public IActionResult Edit(int? id)
+        public IActionResult ProductEdit(int? id)
         {
             ProductViewModel model;
             if (id.HasValue)
@@ -68,16 +68,16 @@ namespace WebStore.Areas.Admin.Controllers
                 model = new ProductViewModel();
             }
 
-            return View("Edit", model);
+            return View("ProductEdit", model);
         }
 
         [HttpPost]
         [Authorize(Roles = "Admin")]
-        public IActionResult Edit(ProductViewModel model)
+        public IActionResult ProductEdit(ProductViewModel model)
         {
             if (model.Id > 0)
             {
-                if (_productDataAdmin.Edit(model))
+                if (_productDataAdmin.ProductEdit(model))
                     return RedirectToAction(nameof(ProductList));
             }
             else
@@ -89,12 +89,28 @@ namespace WebStore.Areas.Admin.Controllers
             if (ModelState.IsValid)
                 return RedirectToAction(nameof(ProductList));
             else
-                return View("Edit", model);
+                return View("ProductEdit", model);
         }
 
         public void AddNewProduct(ProductViewModel dbItemProduct)
         {
             _productDataAdmin.Create(dbItemProduct);
+        }
+
+        public IActionResult ProductDetails(int id)
+        {
+            if (!_productDataAdmin.ProductDetails(id).Equals(null))
+                return View(_productDataAdmin.ProductDetails(id));
+            else
+                return RedirectToAction(nameof(ProductList), _productData.GetProductById(id));
+        }
+
+        public IActionResult ProductDelete(int id)
+        {
+            if (_productDataAdmin.ProductDelete(id))
+                return RedirectToAction(nameof(ProductList));
+
+            return View("PleaseTryAgain");
         }
     }
 

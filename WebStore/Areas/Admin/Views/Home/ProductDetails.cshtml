@@ -1,0 +1,34 @@
+﻿@model ProductViewModel
+
+<hr />
+<table class="table table-bordered">
+    <tr>
+        <td>Id</td>
+        <td>@Model.Id</td>
+    </tr>
+    <tr>
+        <td>Name</td>
+        <td>@Model.Name</td>
+    </tr>
+    <tr>
+        <td>SectionId</td>
+        <td>@Model.SectionId</td>
+    </tr>
+    <tr>
+        <td>BrandId</td>
+        <td>@Model.BrandId</td>
+    </tr>
+    <tr>
+        <td>ImageUrl</td>
+        <td>@Model.ImageUrl</td>
+    </tr>
+    <tr>
+        <td>Price</td>
+        <td>@Model.Price</td>
+    </tr>
+    <tr>
+        <td>Order</td>
+        <td>@Model.Order</td>
+    </tr>
+</table>
+<a class="btn btn-primary" asp-area="Admin" asp-controller="Home" asp-action="ProductList" role="button">Back to list</a>

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Transactions;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 using WebStore.DAL.Context;
 using WebStore.Entities.Entities;
 using WebStore.Infrastructure.Interfaces;
@@ -46,7 +47,7 @@ namespace WebStore.Infrastructure.Sql
 
         }
 
-        public bool Edit(ProductViewModel model)
+        public bool ProductEdit(ProductViewModel model)
         {
             using (var transaction = _context.Database.BeginTransaction())
             {
@@ -68,14 +69,44 @@ namespace WebStore.Infrastructure.Sql
             return true;
         }
 
-        public void Delete(int id)
+        public ProductViewModel ProductDetails(int id)
         {
-            throw new NotImplementedException();
+            var product = _context.Products.FirstOrDefault(e => e.Id.Equals(id));
+
+            if (ReferenceEquals(product, null))
+                return null;
+
+            ProductViewModel model = new ProductViewModel()
+            {
+                Name = product.Name,
+                Order = product.Order,
+                ImageUrl = product.ImageUrl,
+                Price = product.Price,
+                SectionId = product.SectionId.Equals(null) ? null : product.SectionId,
+                BrandId = product.BrandId.Equals(null) ? null : product.BrandId
+            };
+
+            return model;
         }
 
-        public void Details(int id)
+        public bool ProductDelete(int id)
         {
-            throw new NotImplementedException();
+            using (var transaction = _context.Database.BeginTransaction())
+            {
+                var product = _context.Products.First(e => e.Id.Equals(id));
+
+                if (!ReferenceEquals(product, null))
+                {
+                    //_context.Products.Attach(product);
+                    _context.Products.Remove(product);
+                    _context.SaveChanges();
+                    transaction.Commit();
+                    return true;
+                }
+                _context.SaveChanges();
+                transaction.Commit();
+                return false;
+            }
         }
     }
 }

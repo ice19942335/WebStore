@@ -226,19 +226,15 @@ namespace WebStore.DAL.Migrations
 
                     b.Property<int?>("OrderId");
 
-                    b.Property<int?>("OrderId1");
-
                     b.Property<decimal>("Price");
 
-                    b.Property<int?>("ProductId");
+                    b.Property<int>("ProductId");
 
                     b.Property<int>("Quantity");
 
                     b.HasKey("Id");
 
                     b.HasIndex("OrderId");
-
-                    b.HasIndex("OrderId1");
 
                     b.HasIndex("ProductId");
 
@@ -261,7 +257,7 @@ namespace WebStore.DAL.Migrations
 
                     b.Property<decimal>("Price");
 
-                    b.Property<int>("SectionId");
+                    b.Property<int?>("SectionId");
 
                     b.HasKey("Id");
 
@@ -345,17 +341,14 @@ namespace WebStore.DAL.Migrations
 
             modelBuilder.Entity("WebStore.Entities.Entities.OrderItem", b =>
                 {
-                    b.HasOne("WebStore.Entities.Entities.OrderItem", "Order")
-                        .WithMany()
-                        .HasForeignKey("OrderId");
-
-                    b.HasOne("WebStore.Entities.Entities.Order")
+                    b.HasOne("WebStore.Entities.Entities.Order", "Order")
                         .WithMany("OrderItems")
-                        .HasForeignKey("OrderId1");
+                        .HasForeignKey("OrderId");
 
                     b.HasOne("WebStore.Entities.Entities.Product", "Product")
                         .WithMany()
-                        .HasForeignKey("ProductId");
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("WebStore.Entities.Entities.Product", b =>
@@ -366,8 +359,7 @@ namespace WebStore.DAL.Migrations
 
                     b.HasOne("WebStore.Entities.Entities.Section", "Section")
                         .WithMany("Products")
-                        .HasForeignKey("SectionId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("SectionId");
                 });
 
             modelBuilder.Entity("WebStore.Entities.Entities.Section", b =>

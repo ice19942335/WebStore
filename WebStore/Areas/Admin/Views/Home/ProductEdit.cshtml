@@ -10,7 +10,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Edit">
+        <form asp-action="ProductEdit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input asp-for="Id" type="hidden" />
             <div class="form-group">
@@ -46,5 +46,5 @@
 </div>
 
 <div>
-    <a class="btn btn-primary" asp-area="Admin" asp-controller="Home" asp-action="ProductList" role="button">Назад к списку</a>
+    <a class="btn btn-primary" asp-area="Admin" asp-controller="Home" asp-action="ProductList" role="button">Back to list</a>
 </div>
