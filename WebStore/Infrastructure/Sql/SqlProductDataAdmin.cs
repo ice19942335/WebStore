@@ -97,7 +97,6 @@ namespace WebStore.Infrastructure.Sql
 
                 if (!ReferenceEquals(product, null))
                 {
-                    //_context.Products.Attach(product);
                     _context.Products.Remove(product);
                     _context.SaveChanges();
                     transaction.Commit();

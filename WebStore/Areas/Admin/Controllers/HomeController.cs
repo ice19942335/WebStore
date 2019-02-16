@@ -10,6 +10,7 @@ using WebStore.Areas.Admin.Models;
 using WebStore.DAL.Context;
 using WebStore.DomainNew.Entities;
 using WebStore.Entities.Entities;
+using WebStore.Infrastructure.Implementations;
 using WebStore.Infrastructure.Interfaces;
 using WebStore.Models;
 
@@ -19,13 +20,13 @@ namespace WebStore.Areas.Admin.Controllers
     public class HomeController : Controller
     {
         private readonly IProductData _productData;
-        private readonly WebStoreContext _webStoreContext;
+        private readonly WebStoreContext _context;
         private readonly IProductDataAdmin _productDataAdmin;
 
         public HomeController(IProductData productData, WebStoreContext webStoreContext, IProductDataAdmin productDataAdmin)
         {
             _productData = productData;
-            _webStoreContext = webStoreContext;
+            _context = webStoreContext;
             _productDataAdmin = productDataAdmin;
         }
 
@@ -37,7 +38,7 @@ namespace WebStore.Areas.Admin.Controllers
         public async Task<IActionResult> ProductList(int page = 1)
         {
             int pageSize = 5;
-            IQueryable<Product> productsList = _webStoreContext.Products;
+            IQueryable<Product> productsList = _context.Products;
 
             var count = await productsList.CountAsync();
             var items = await productsList.Skip((page - 1) * pageSize).Take(pageSize).ToListAsync();
@@ -111,6 +112,26 @@ namespace WebStore.Areas.Admin.Controllers
                 return RedirectToAction(nameof(ProductList));
 
             return View("PleaseTryAgain");
+        }
+
+        public IActionResult FillDdFromProducts()
+        {
+            var memoryData = new InMemoryProductData();
+
+            using (var transaction = _context.Database.BeginTransaction())
+            {
+                foreach (var product in memoryData.Products)
+                    _context.Products.Add(product);
+
+                
+                _context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT [dbo].[Products] ON");
+                _context.SaveChanges();
+                _context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT [dbo].[Products] OFF");
+                transaction.Commit();
+            }
+            
+
+            return RedirectToAction(nameof(ProductList));
         }
     }
 
