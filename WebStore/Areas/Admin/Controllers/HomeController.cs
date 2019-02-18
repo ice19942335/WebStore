@@ -123,10 +123,17 @@ namespace WebStore.Areas.Admin.Controllers
                 foreach (var product in memoryData.Products)
                     _context.Products.Add(product);
 
+                try
+                {
+                    _context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT [dbo].[Products] ON");
+                    _context.SaveChanges();
+                    _context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT [dbo].[Products] OFF");
+                }
+                catch (Exception)
+                {
+                    return Content("List have to be empty, because there is test data with Id duplicates");
+                }
                 
-                _context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT [dbo].[Products] ON");
-                _context.SaveChanges();
-                _context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT [dbo].[Products] OFF");
                 transaction.Commit();
             }
             

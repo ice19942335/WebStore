@@ -10,16 +10,14 @@ namespace WebStore.Infrastructure.Implementations
 {
     public class InMemoryProductData : IProductData
     {
-        private readonly List<Section> _sections;
-        private readonly List<Brand> _brands;
-        private readonly List<Product> _products;
-
-        public List<Product> Products => _products;
+        public List<Section> Section { get; }
+        public List<Brand> Brand { get; }
+        public List<Product> Products { get; }
 
 
         public InMemoryProductData()
         {
-            _sections = new List<Section>
+            Section = new List<Section>
             {
                 new Section{Id = 1,Name = "Sportswear - 1",Order = 0,ParentId = null},
                 new Section{Id = 2,Name = "Nike - 2",Order = 0,ParentId = 1},
@@ -53,7 +51,7 @@ namespace WebStore.Infrastructure.Implementations
                 new Section{Id = 30,Name = "Shoes - 30",Order = 9,ParentId = null}
             };
 
-            _brands = new List<Brand>
+            Brand = new List<Brand>
             {
                 new Brand{Id = 1, Name = "Acne - 1", Order = 0},
                 new Brand{Id = 2, Name = "Grüne Erde - 2", Order = 1},
@@ -64,7 +62,7 @@ namespace WebStore.Infrastructure.Implementations
                 new Brand{Id = 7, Name = "Rösch creative culture - 7", Order = 6}
             };
 
-            _products = new List<Product>
+            Products = new List<Product>
             {
                 new Product{Id = 1,Name = "Product-1",Price = 1025,ImageUrl = "product1.jpg",Order = 0,SectionId = 1,BrandId = 1},
                 new Product{Id = 2,Name = "Product-2",Price = 1025,ImageUrl = "product2.jpg",Order = 1,SectionId = 2,BrandId = 1},
@@ -84,17 +82,17 @@ namespace WebStore.Infrastructure.Implementations
 
         public IEnumerable<Section> GetSections()
         {
-            return _sections;
+            return Section;
         }
 
         public IEnumerable<Brand> GetBrands()
         {
-            return _brands;
+            return Brand;
         }
 
         public IEnumerable<Product> GetProducts(ProductFilter filter)
         {
-            var products = _products;
+            var products = Products;
             if (filter.SectionId.HasValue)
                 products = products.Where(p => p.SectionId.Equals(filter.SectionId)).ToList();
             if (filter.BrandId.HasValue)
@@ -104,7 +102,7 @@ namespace WebStore.Infrastructure.Implementations
 
         public ProductViewModel GetProductById(int id)
         {
-            var product = _products.FirstOrDefault(e => e.Id == id);
+            var product = Products.FirstOrDefault(e => e.Id == id);
 
             ProductViewModel model = new ProductViewModel
             {
