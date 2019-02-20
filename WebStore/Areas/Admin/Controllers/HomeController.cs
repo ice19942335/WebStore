@@ -114,6 +114,11 @@ namespace WebStore.Areas.Admin.Controllers
             return View("PleaseTryAgain");
         }
 
+        //public IActionResult OrdersList()
+        //{
+
+        //}
+
         public IActionResult FillDdFromProducts()
         {
             var memoryData = new InMemoryProductData();

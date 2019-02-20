@@ -28,6 +28,7 @@ namespace WebStore.Components
             var categories = _productData.GetSections();
             var parentCategories = categories.Where(p => !p.ParentId.HasValue).ToArray();
             var parentSections = new List<SectionViewModel>();
+
             foreach (var parentCategory in parentCategories)
             {
                 parentSections.Add(new SectionViewModel()
@@ -38,6 +39,7 @@ namespace WebStore.Components
                     ParentSection = null
                 });
             }
+
             foreach (var sectionViewModel in parentSections)
             {
                 var childCategories = categories.Where(c => c.ParentId.Equals(sectionViewModel.Id));
