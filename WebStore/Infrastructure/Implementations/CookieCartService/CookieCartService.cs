@@ -27,7 +27,7 @@ namespace WebStore.Infrastructure.Implementations.CookieCartService
 
                 if (cookie == null)
                 {
-                    cart = new Cart {Items = new List<CartItem>()};
+                    cart = new Cart { Items = new List<CartItem>() };
                     json = JsonConvert.SerializeObject(cart);
 
                     _httpContextAccessor.HttpContext.Response.Cookies.Append(_cartName, json, new CookieOptions()
@@ -121,15 +121,18 @@ namespace WebStore.Infrastructure.Implementations.CookieCartService
             var products = _productData.GetProducts(new ProductFilter
             {
                 Ids = Cart.Items.Select(i => i.ProductId).ToList()
-            }).Select(p => new ProductViewModel
-            {
-                Id = p.Id,
-                ImageUrl = p.ImageUrl,
-                Name = p.Name,
-                Order = p.Order,
-                Price = p.Price,
-                Brand = p.Brand != null ? p.Brand.Name : string.Empty
-            }).ToList();
+            })
+                .Select(p => new ProductViewModel
+                {
+                    Id = p.Id,
+                    ImageUrl = p.ImageUrl,
+                    Name = p.Name,
+                    Order = p.Order,
+                    Price = p.Price,
+                    Brand = p.Brand,
+                    SectionId = p.SectionId,
+                    BrandId = p.BrandId
+                }).ToList();
 
             var r = new CartViewModel
             {
@@ -138,5 +141,6 @@ namespace WebStore.Infrastructure.Implementations.CookieCartService
 
             return r;
         }
+
     }
 }

@@ -35,7 +35,8 @@ namespace WebStore.Infrastructure.Sql
             if (filter.BrandId.HasValue)
                 query = query.Where(c => c.BrandId.HasValue && c.BrandId.Value.Equals(filter.BrandId.Value));
             if (filter.SectionId.HasValue)
-                query = query.Where(c => c.SectionId.Equals(filter.SectionId.Value)); return query.ToList();
+                query = query.Where(c => c.SectionId.Equals(filter.SectionId.Value));
+            return query.ToList();
         }
 
         public ProductViewModel GetProductById(int id)
@@ -50,7 +51,7 @@ namespace WebStore.Infrastructure.Sql
                 Order = product.Order,
                 ImageUrl = product.ImageUrl,
                 Price = product.Price,
-                Brand = product.Brand.Name,
+                Brand = product.Brand,
                 SectionId = product.SectionId,
                 BrandId = product.BrandId
             };

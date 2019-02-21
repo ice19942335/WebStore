@@ -15,5 +15,6 @@ namespace WebStore.Infrastructure.Interfaces
         Order GetOrderById(int id);
 
         Order CreateOrder(OrderViewModel orderModel, CartViewModel transformCart, string userName);
+
     }
 }

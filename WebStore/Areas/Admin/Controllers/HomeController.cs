@@ -22,12 +22,14 @@ namespace WebStore.Areas.Admin.Controllers
         private readonly IProductData _productData;
         private readonly WebStoreContext _context;
         private readonly IProductDataAdmin _productDataAdmin;
+        private readonly IOrdersServiceAdmin _ordersServiceAdmin;
 
-        public HomeController(IProductData productData, WebStoreContext webStoreContext, IProductDataAdmin productDataAdmin)
+        public HomeController(IProductData productData, WebStoreContext webStoreContext, IProductDataAdmin productDataAdmin, IOrdersServiceAdmin ordersServiceAdmin)
         {
             _productData = productData;
             _context = webStoreContext;
             _productDataAdmin = productDataAdmin;
+            _ordersServiceAdmin = ordersServiceAdmin;
         }
 
         public IActionResult Index()
@@ -49,6 +51,25 @@ namespace WebStore.Areas.Admin.Controllers
             {
                 PageViewModel = pageViewModel,
                 Products = items
+            };
+
+            return View(viewModel);
+        }
+
+        public async Task<IActionResult> OrdersList(int page = 1)
+        {
+            int pageSize = 5;
+            IQueryable<Order> ordersList = _context.Orders;
+
+            var count = await ordersList.CountAsync();
+            var items = await ordersList.Skip((page - 1) * pageSize).Take(pageSize).ToListAsync();
+
+            PageViewModel pageViewModel = new PageViewModel(count, page, pageSize);
+
+            OrdersListViewModel viewModel = new OrdersListViewModel
+            {
+                PageViewModel = pageViewModel,
+                OrdersList = items
             };
 
             return View(viewModel);
@@ -113,11 +134,6 @@ namespace WebStore.Areas.Admin.Controllers
 
             return View("PleaseTryAgain");
         }
-
-        //public IActionResult OrdersList()
-        //{
-
-        //}
 
         public IActionResult FillDdFromProducts()
         {

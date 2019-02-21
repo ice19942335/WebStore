@@ -111,7 +111,7 @@ namespace WebStore.Infrastructure.Implementations
                 Order = product.Order,
                 ImageUrl = product.ImageUrl,
                 Price = product.Price,
-                Brand = product.Brand.Name,
+                Brand = product.Brand,
                 SectionId = product.SectionId,
                 BrandId = product.BrandId
             };

@@ -55,6 +55,7 @@ namespace WebStore
             services.AddScoped<IProductData, SqlProductData>();
             services.AddScoped<IOrdersService, SqlOrdersService>();
             services.AddScoped<IProductDataAdmin, SqlProductDataAdmin>();
+            services.AddScoped<IOrdersServiceAdmin, SqlOrdersServiceAdmin>();
 
             services.AddDbContext<WebStoreContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 

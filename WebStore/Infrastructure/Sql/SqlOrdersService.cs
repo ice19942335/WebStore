@@ -28,7 +28,6 @@ namespace WebStore.Infrastructure.Sql
 
         public Order GetOrderById(int id) =>_context.Orders.Include("OrderItems").FirstOrDefault(o => o.Id.Equals(id));
         
-
         public Order CreateOrder(OrderViewModel orderModel, CartViewModel transformCart, string userName)
         {
 
@@ -82,5 +81,6 @@ namespace WebStore.Infrastructure.Sql
                 return order;
             }
         }
+
     }
 }

@@ -63,7 +63,6 @@
                     <div class="shop-menu pull-right">
                         <ul class="nav navbar-nav">
                             <li><a asp-area="" asp-controller="Employee" asp-action="EmployeeList"><i class="fa fa-user"></i> Employee list</a></li>
-                            <li><a href="#"><i class="fa fa-star"></i> Wishlist</a></li>
                             <li><a asp-area="" asp-controller="Home" asp-action="Checkout"><i class="fa fa-crosshairs"></i> Checkout</a></li>
                             <li><a asp-area="" asp-controller="Cart" asp-action="Details"><i class="fa fa-shopping-cart"></i> Cart</a></li>
                         </ul>
@@ -98,7 +97,6 @@
                                     <li><a asp-area="" asp-controller="Catalog" asp-action="Shop">Products</a></li>
                                     <li><a asp-area="" asp-controller="Home" asp-action="Checkout">Checkout</a></li>
                                     <li><a asp-area="" asp-controller="Cart" asp-action="Details">Cart</a></li>
-                                    <li><a asp-area="" asp-controller="Account" asp-action="Login">Login</a></li>
                                 </ul>
                             </li>
                             <li class="dropdown">
@@ -110,7 +108,7 @@
                             </li>
                             <li><a asp-area="" asp-controller="Home" asp-action="NotFound404">404</a></li>
                             <li><a asp-area="" asp-controller="Home" asp-action="ContactUs">Contact</a></li>
-                            <li><a asp-area="" asp-controller="Profile" asp-action="Index">Profile</a></li>
+                            @*<li><a asp-area="" asp-controller="Profile" asp-action="Index">Profile</a></li>*@
                             <li><a asp-area="" asp-controller="Test" asp-action="Index">Test</a></li>
 
                         </ul>

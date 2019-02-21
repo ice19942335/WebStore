@@ -1,7 +1,6 @@
 ﻿@using Microsoft.AspNetCore.Identity.EntityFrameworkCore
 @model IEnumerable<EmployeeViewModel>
 
-<hr />
 @if (User.IsInRole("Admin"))
 {
     <a class="btn btn-primary" asp-controller="Employee" asp-action="Edit" role="button">Добавить</a>
