@@ -60,8 +60,11 @@ namespace WebStore.Controllers
             {
                 var orderResult = _ordersService.CreateOrder(model, _cartService.TransformCart(), User.Identity.Name);
                 _cartService.RemoveAll();
+                if (orderResult.Id.Equals(0)) //Will be true IF CreateOrder method will return a (New Order)
+                    return View("YouHaveToBeRegistredUser");
                 return RedirectToAction("OrderConfirmed", new { id = orderResult.Id });
             }
+
             var detailsModel = new DetailsViewModel
             {
                 CartViewModel = _cartService.TransformCart(),

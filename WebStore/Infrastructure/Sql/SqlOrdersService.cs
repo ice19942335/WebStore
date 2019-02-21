@@ -33,9 +33,10 @@ namespace WebStore.Infrastructure.Sql
 
             User user = new User();
 
-            user = _userManager.FindByNameAsync(userName).Result;
-            if (string.IsNullOrEmpty(user.UserName))
+            if (string.IsNullOrEmpty(userName))
                 return new Order();
+
+            user = _userManager.FindByNameAsync(userName).Result;
 
             using (var transaction = _context.Database.BeginTransaction())
             {
