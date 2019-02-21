@@ -26,24 +26,16 @@ namespace WebStore.Infrastructure.Sql
 
         public IEnumerable<Order> GetUserOrders(string userName) => _context.Orders.Include("User").Include("OrderItems").Where(o => o.User.UserName.Equals(userName)).ToList();
 
-        public Order GetOrderById(int id) =>_context.Orders.Include("OrderItems").FirstOrDefault(o => o.Id.Equals(id));
-        
+        public Order GetOrderById(int id) => _context.Orders.Include("OrderItems").FirstOrDefault(o => o.Id.Equals(id));
+
         public Order CreateOrder(OrderViewModel orderModel, CartViewModel transformCart, string userName)
         {
 
             User user = new User();
-            try
-            {
-                user = _userManager.FindByNameAsync(userName).Result;
-                if (user.Email.Equals(null))
-                    return new Order();
-            }
-            catch (Exception e)
-            {
-                    return new Order();
-            }
-            
-            
+
+            user = _userManager.FindByNameAsync(userName).Result;
+            if (string.IsNullOrEmpty(user.UserName))
+                return new Order();
 
             using (var transaction = _context.Database.BeginTransaction())
             {
