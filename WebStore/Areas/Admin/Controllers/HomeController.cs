@@ -10,6 +10,7 @@ using WebStore.Areas.Admin.Models;
 using WebStore.DAL.Context;
 using WebStore.DomainNew.Entities;
 using WebStore.Entities.Entities;
+using WebStore.Infrastructure.Enums;
 using WebStore.Infrastructure.Implementations;
 using WebStore.Infrastructure.Interfaces;
 using WebStore.Models;
@@ -56,10 +57,32 @@ namespace WebStore.Areas.Admin.Controllers
             return View(viewModel);
         }
 
-        public async Task<IActionResult> OrdersList(int page = 1)
+        public async Task<IActionResult> OrdersList(DayOfWeek? day, string name, int page = 1, SortState sortOrder = SortState.NameAsc)
         {
             int pageSize = 5;
             IQueryable<Order> ordersList = _context.Orders;
+
+            if (day != null)
+                ordersList = ordersList.Where(e => e.Date.DayOfWeek.Equals(day));
+
+            if (!string.IsNullOrEmpty(name))
+                ordersList = ordersList.Where(e => e.Name.Contains(name));
+
+            switch (sortOrder)
+            {
+                case SortState.DateDesc:
+                    ordersList = ordersList.OrderByDescending(e => e.Date);
+                    break;
+                case SortState.NameDesc:
+                    ordersList = ordersList.OrderByDescending(e => e.Name);
+                    break;
+                case SortState.NameAsc:
+                    ordersList = ordersList.OrderBy(e => e.Name);
+                    break;
+                default:
+                    ordersList = ordersList.OrderBy(e => e.Date);
+                    break;
+            }
 
             var count = await ordersList.CountAsync();
             var items = await ordersList.Skip((page - 1) * pageSize).Take(pageSize).ToListAsync();
@@ -69,6 +92,8 @@ namespace WebStore.Areas.Admin.Controllers
             OrdersListViewModel viewModel = new OrdersListViewModel
             {
                 PageViewModel = pageViewModel,
+                SortViewModel = new SortViewModel(sortOrder),
+                FilterViewModel = new FilterViewModel(day, name),
                 OrdersList = items
             };
 

@@ -4,12 +4,25 @@
 
 @{
     ViewData["Title"] = "Orders List";
-}
-
-<hr>
-@{
     Order orderExample = new Order();
 }
+
+
+<hr>
+<form method="get">
+    <div class="form-inline">
+        <label class="control-label">Name: </label>
+        @Html.TextBox("name", Model.FilterViewModel.SelectedName, htmlAttributes: new { @class = "form-control" })
+ 
+        <label class="control-label">Day: </label>
+        @Html.DropDownList("day", Model.FilterViewModel.DaysList as SelectList,
+            htmlAttributes: new { @class = "form-control" })
+ 
+        <input type="submit" value="Фильтр" class="btn btn-default" />
+    </div>
+</form>
+
+<hr>
 <table class="table">
     <thead>
         <tr>
