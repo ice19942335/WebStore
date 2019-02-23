@@ -1,0 +1,32 @@
+﻿@using WebStore.Areas.Admin.Models
+@model OrderDetailsViewModel
+
+<hr />
+<table class="table table-bordered">
+    <tr>
+        <td>@nameof(Model.Order.Id)</td>
+        <td>@Model.Order.Id</td>
+    </tr>
+    <tr>
+        <td>@nameof(Model.Order.Name)</td>
+        <td>@Model.Order.Name</td>
+    </tr>
+    <tr>
+        <td>UserName</td>
+        <td>@Model.Order.User.NormalizedUserName</td>
+    </tr>
+    <tr>
+        <td>@nameof(Model.Order.Phone)</td>
+        <td>@Model.Order.Phone</td>
+    </tr>
+    <tr>
+        <td>@nameof(Model.Order.Address)</td>
+        <td>@Model.Order.Address</td>
+    </tr>
+    <tr>
+        <td>@nameof(Model.Order.Date)</td>
+        <td>@Model.Order.Date</td>
+    </tr>
+</table>
+
+<a class="btn btn-primary" asp-area="Admin" asp-controller="Home" asp-action="OrdersList" role="button">Back to Orders List</a>

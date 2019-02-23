@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -24,13 +25,15 @@ namespace WebStore.Areas.Admin.Controllers
         private readonly WebStoreContext _context;
         private readonly IProductDataAdmin _productDataAdmin;
         private readonly IOrdersServiceAdmin _ordersServiceAdmin;
+        private readonly UserManager<User> _userManager;
 
-        public HomeController(IProductData productData, WebStoreContext webStoreContext, IProductDataAdmin productDataAdmin, IOrdersServiceAdmin ordersServiceAdmin)
+        public HomeController(IProductData productData, WebStoreContext webStoreContext, IProductDataAdmin productDataAdmin, IOrdersServiceAdmin ordersServiceAdmin, UserManager<User> userManager)
         {
             _productData = productData;
             _context = webStoreContext;
             _productDataAdmin = productDataAdmin;
             _ordersServiceAdmin = ordersServiceAdmin;
+            _userManager = userManager;
         }
 
         public IActionResult Index()
@@ -38,6 +41,7 @@ namespace WebStore.Areas.Admin.Controllers
             return View();
         }
 
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> ProductList(int page = 1)
         {
             int pageSize = 5;
@@ -57,10 +61,11 @@ namespace WebStore.Areas.Admin.Controllers
             return View(viewModel);
         }
 
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> OrdersList(DayOfWeek? day, string name, int page = 1, SortState sortOrder = SortState.NameAsc)
         {
             int pageSize = 5;
-            IQueryable<Order> ordersList = _context.Orders;
+            IQueryable<Order> ordersList = _context.Orders.Include("User");
 
             if (day != null)
                 ordersList = ordersList.Where(e => e.Date.DayOfWeek.Equals(day));
@@ -99,6 +104,9 @@ namespace WebStore.Areas.Admin.Controllers
 
             return View(viewModel);
         }
+
+        [Authorize(Roles = "Admin")]
+        public IActionResult OrderDetails(int id) => View(_ordersServiceAdmin.GetOrderById(id));
 
         [Authorize(Roles = "Admin")]
         public IActionResult ProductEdit(int? id)

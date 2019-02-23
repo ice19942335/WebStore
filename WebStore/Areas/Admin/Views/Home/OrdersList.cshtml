@@ -7,8 +7,6 @@
     Order orderExample = new Order();
 }
 
-
-<hr>
 <form method="get">
     <div class="form-inline">
         <label class="control-label">Name: </label>
@@ -44,7 +42,6 @@
             <th>
                 @nameof(orderExample.Date)
             </th>
-            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -58,7 +55,7 @@
                     @Html.DisplayFor(modelItem => item.Name)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.User.UserName)
+                    @Html.DisplayFor(modelItem => item.User.NormalizedUserName)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Phone)
@@ -73,6 +70,8 @@
                     @*@Html.ActionLink("Edit", "ProductEdit", new { area = "Admin", id = item.Id }) |
                     @Html.ActionLink("Details", "ProductDetails", new { area = "Admin", id = item.Id }) |
                     @Html.ActionLink("Delete", "ProductDelete", new { area = "Admin", id = item.Id })*@
+
+                    <a class="btn btn-primary" asp-area="Admin" asp-controller="Home" asp-action="OrderDetails" asp-route-Id="@item.Id">Details</a>
                 </td>
             </tr>
         }

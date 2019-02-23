@@ -11,17 +11,9 @@ namespace WebStore.Areas.Admin.Models
     {
         public FilterViewModel(DayOfWeek? day, string name)
         {
-            Dictionary<DateFilter, string> daysList = new Dictionary<DateFilter, string>();
+            List<string> daysList = new List<string>() {"All", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday" };
 
-            daysList.Add(new DateFilter(DayOfWeek.Monday), "Monday");
-            daysList.Add(new DateFilter(DayOfWeek.Tuesday), "Tuesday");
-            daysList.Add(new DateFilter(DayOfWeek.Wednesday), "Wednesday");
-            daysList.Add(new DateFilter(DayOfWeek.Thursday), "Thursday");
-            daysList.Add(new DateFilter(DayOfWeek.Friday), "Friday");
-            daysList.Add(new DateFilter(DayOfWeek.Saturday), "Saturday");
-            daysList.Add(new DateFilter(DayOfWeek.Sunday), "Sunday");
-
-            DaysList = new SelectList(daysList.Values);
+            DaysList = new SelectList(daysList);
             SelectedDay = day;
             SelectedName = name;
         }
