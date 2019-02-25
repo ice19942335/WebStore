@@ -1,0 +1,63 @@
+﻿@using Microsoft.AspNetCore.Http.Internal
+@using WebStore.Entities.Entities
+@model WebStore.Areas.Admin.Models.OrderDetailsViewModel
+
+@{
+    var itemsList = Model.Order.OrderItems;
+    var itemsListAll = Model.OrderItemsList;
+
+    OrderItem orderItemExample = new OrderItem();
+}
+<hr>
+@{
+    if (Model.Order.OrderItems.Count > 0)
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        @nameof(orderItemExample.Price)
+                    </th>
+                    <th>
+                        @nameof(orderItemExample.Product)
+                    </th>
+                    <th>
+                        @nameof(orderItemExample.Quantity)
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    foreach (var item in itemsList)
+                    {
+                        foreach (var itemFromAll in itemsListAll)
+                        {
+                            if (item.Id.Equals(itemFromAll.Id))
+                            {
+                                <tr>
+                                    <th>
+                                        @item.Price
+                                    </th>
+                                    <th>
+
+                                        @itemFromAll.Product.Name
+
+                                    </th>
+                                    <th>
+                                        @item.Quantity
+                                    </th>
+                                </tr>
+                            }
+                        }
+                    }
+                }
+
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <h4>Something went wrong! Items count can't be less than 1</h4>
+    }
+}
+

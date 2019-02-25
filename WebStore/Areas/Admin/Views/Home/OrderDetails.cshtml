@@ -1,8 +1,7 @@
 ﻿@using WebStore.Areas.Admin.Models
 @model OrderDetailsViewModel
 
-<hr />
-<table class="table table-bordered">
+<table class="table">
     <tr>
         <td>@nameof(Model.Order.Id)</td>
         <td>@Model.Order.Id</td>
@@ -27,6 +26,11 @@
         <td>@nameof(Model.Order.Date)</td>
         <td>@Model.Order.Date</td>
     </tr>
+    <tr>
+        <td>Items QTY</td>
+        <td>@Model.Order.OrderItems.Count | <a asp-area="Admin" asp-controller="Home" asp-action="OrderItems" asp-route-id="@Model.Order.Id" role="button">Details</a></td>
+    </tr>
 </table>
+
 
 <a class="btn btn-primary" asp-area="Admin" asp-controller="Home" asp-action="OrdersList" role="button">Back to Orders List</a>

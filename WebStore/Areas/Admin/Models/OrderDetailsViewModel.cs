@@ -9,5 +9,6 @@ namespace WebStore.Areas.Admin.Models
     public class OrderDetailsViewModel
     {
         public Order Order { get; set; }
+        public IEnumerable<OrderItem> OrderItemsList { get; set; }
     }
 }

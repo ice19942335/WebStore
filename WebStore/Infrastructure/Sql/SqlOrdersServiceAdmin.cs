@@ -26,7 +26,15 @@ namespace WebStore.Infrastructure.Sql
 
         public IEnumerable<Order> GetAllOrdersList() => _context.Orders.ToList();
 
-        public OrderDetailsViewModel GetOrderById(int id) => new OrderDetailsViewModel{Order = _context.Orders.Include("User").FirstOrDefault(e => e.Id.Equals(id))};
+        public OrderDetailsViewModel GetOrderById(int id)
+        {
+            //var order = _context.Orders.Include("User").Include("OrderItems").FirstOrDefault(e => e.Id.Equals(id));
 
+            return new OrderDetailsViewModel
+            {
+                Order = _context.Orders.Include("User").Include("OrderItems").FirstOrDefault(e => e.Id.Equals(id)),
+                OrderItemsList = _context.OrderItems.Include("Product")
+            };
+        }
     }
 }

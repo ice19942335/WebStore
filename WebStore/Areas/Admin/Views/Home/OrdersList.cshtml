@@ -25,7 +25,7 @@
     <thead>
         <tr>
             <th>
-                @nameof(orderExample.Id)
+                Order Id
             </th>
             <th>
                 @nameof(orderExample.Name)
@@ -67,11 +67,7 @@
                     @Html.DisplayFor(modelItem => item.Date)
                 </td>
                 <td>
-                    @*@Html.ActionLink("Edit", "ProductEdit", new { area = "Admin", id = item.Id }) |
-                    @Html.ActionLink("Details", "ProductDetails", new { area = "Admin", id = item.Id }) |
-                    @Html.ActionLink("Delete", "ProductDelete", new { area = "Admin", id = item.Id })*@
-
-                    <a class="btn btn-primary" asp-area="Admin" asp-controller="Home" asp-action="OrderDetails" asp-route-Id="@item.Id">Details</a>
+                    <a asp-area="Admin" asp-controller="Home" asp-action="OrderDetails" asp-route-id="@item.Id">Details</a>
                 </td>
             </tr>
         }

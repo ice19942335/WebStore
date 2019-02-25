@@ -109,6 +109,9 @@ namespace WebStore.Areas.Admin.Controllers
         public IActionResult OrderDetails(int id) => View(_ordersServiceAdmin.GetOrderById(id));
 
         [Authorize(Roles = "Admin")]
+        public IActionResult OrderItems(int id) => View(_ordersServiceAdmin.GetOrderById(id));
+
+        [Authorize(Roles = "Admin")]
         public IActionResult ProductEdit(int? id)
         {
             ProductViewModel model;
