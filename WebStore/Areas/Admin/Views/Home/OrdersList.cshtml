@@ -67,7 +67,8 @@
                     @Html.DisplayFor(modelItem => item.Date)
                 </td>
                 <td>
-                    <a asp-area="Admin" asp-controller="Home" asp-action="OrderDetails" asp-route-id="@item.Id">Details</a>
+                    <a asp-area="Admin" asp-controller="Home" asp-action="OrderDetails" asp-route-id="@item.Id">Details</a> |
+                    <a asp-area="Admin" asp-controller="Home" asp-action="DeleteOdrerById" asp-route-id="@item.Id">Delete</a>
                 </td>
             </tr>
         }

@@ -228,7 +228,7 @@ namespace WebStore.DAL.Migrations
 
                     b.Property<decimal>("Price");
 
-                    b.Property<int?>("ProductId");
+                    b.Property<int>("ProductId");
 
                     b.Property<int>("Quantity");
 
@@ -347,7 +347,8 @@ namespace WebStore.DAL.Migrations
 
                     b.HasOne("WebStore.Entities.Entities.Product", "Product")
                         .WithMany()
-                        .HasForeignKey("ProductId");
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("WebStore.Entities.Entities.Product", b =>

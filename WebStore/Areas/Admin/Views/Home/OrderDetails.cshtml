@@ -28,7 +28,14 @@
     </tr>
     <tr>
         <td>Items QTY</td>
-        <td>@Model.Order.OrderItems.Count | <a asp-area="Admin" asp-controller="Home" asp-action="OrderItems" asp-route-id="@Model.Order.Id" role="button">Details</a></td>
+        @if (@Model.Order.OrderItems.Count.Equals(0))
+        {
+            <td>All products from this order was Deleted!</td>
+        }
+        else
+        {
+            <td>@Model.Order.OrderItems.Count | <a asp-area="Admin" asp-controller="Home" asp-action="OrderItems" asp-route-id="@Model.Order.Id" role="button">Details</a></td>
+        }
     </tr>
 </table>
 

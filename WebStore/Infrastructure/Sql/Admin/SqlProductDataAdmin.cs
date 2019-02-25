@@ -1,16 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using System.Transactions;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Storage;
 using WebStore.DAL.Context;
 using WebStore.Entities.Entities;
-using WebStore.Infrastructure.Interfaces;
+using WebStore.Infrastructure.Implementations;
+using WebStore.Infrastructure.Interfaces.Admin;
 using WebStore.Models;
 
-namespace WebStore.Infrastructure.Sql
+namespace WebStore.Infrastructure.Sql.Admin
 {
     public class SqlProductDataAdmin : IProductDataAdmin
     {
@@ -105,6 +102,34 @@ namespace WebStore.Infrastructure.Sql
                 _context.SaveChanges();
                 transaction.Commit();
                 return false;
+            }
+        }
+
+        public IQueryable<Product> GetAllProducts() => _context.Products;
+
+        public bool FillListWithProductsDeleteLater()
+        {
+            var memoryData = new InMemoryProductData();
+
+            using (var transaction = _context.Database.BeginTransaction())
+            {
+                foreach (var product in memoryData.Products)
+                    _context.Products.Add(product);
+
+                try
+                {
+                    _context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT [dbo].[Products] ON");
+                    _context.SaveChanges();
+                    _context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT [dbo].[Products] OFF");
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
+
+                transaction.Commit();
+
+                return true;
             }
         }
     }

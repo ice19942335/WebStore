@@ -11,6 +11,7 @@ namespace WebStore.Entities.Entities
     {
         public virtual Order Order { get; set; }
 
+        [Required]
         public virtual Product Product { get; set; }
 
         public decimal Price { get; set; }
