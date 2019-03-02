@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using WebStore.Areas.Admin.Models;
 using WebStore.DAL.Context;
 using WebStore.Entities.Entities;
-using WebStore.Infrastructure.Interfaces;
-using WebStore.Infrastructure.Interfaces.Admin;
+using WebStore.Interfaces;
+using WebStore.Models.Admin;
 
 namespace WebStore.Infrastructure.Sql.Admin
 {

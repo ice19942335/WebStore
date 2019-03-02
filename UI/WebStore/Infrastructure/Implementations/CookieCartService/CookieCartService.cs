@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using WebStore.Entities.Entities;
-using WebStore.Infrastructure.Interfaces;
+using WebStore.Interfaces;
 using WebStore.Models;
 using WebStore.Models.Cart;
 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WebStore.Entities.Entities;
-using WebStore.Infrastructure.Interfaces;
+using WebStore.Interfaces;
 using WebStore.Models;
 
 namespace WebStore.Infrastructure.Implementations

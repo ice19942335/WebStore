@@ -2,7 +2,7 @@
 using WebStore.Entities.Entities;
 using WebStore.Models;
 
-namespace WebStore.Infrastructure.Interfaces.Admin
+namespace WebStore.Interfaces
 {
     public interface IProductDataAdmin
     {

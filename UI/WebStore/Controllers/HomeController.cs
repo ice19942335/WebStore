@@ -9,7 +9,7 @@ using System.Web;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SmartBreadcrumbs;
-using WebStore.Infrastructure.Interfaces;
+using WebStore.Interfaces;
 using WebStore.Models;
 
 namespace WebStore.Controllers
@@ -17,8 +17,19 @@ namespace WebStore.Controllers
 
     public class HomeController : Controller
     {
+        private readonly IValuesService _valuesService;
+        public HomeController(IValuesService valuesService)
+        {
+            _valuesService = valuesService;
+        }
+
+
         [DefaultBreadcrumb("Home")]
-        public IActionResult Index() => View();
+        public async Task<IActionResult> Index()
+        {
+            var values = await _valuesService.GetAsync();
+            return View(values);
+        }
 
         //[Breadcrumb("Checkout", FromAction = "Home.Cart")]
         [Breadcrumb("Checkout")]

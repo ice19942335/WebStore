@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using WebStore.DAL.Context;
 using WebStore.Entities.Entities;
 using WebStore.Entities.Entities.Identity;
-using WebStore.Infrastructure.Interfaces;
+using WebStore.Interfaces;
 using WebStore.Models.Cart;
 using WebStore.Models.Order;
 

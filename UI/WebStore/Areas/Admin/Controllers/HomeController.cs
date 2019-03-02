@@ -13,8 +13,7 @@ using WebStore.Entities.Entities;
 using WebStore.Entities.Entities.Identity;
 using WebStore.Infrastructure.Enums;
 using WebStore.Infrastructure.Implementations;
-using WebStore.Infrastructure.Interfaces;
-using WebStore.Infrastructure.Interfaces.Admin;
+using WebStore.Interfaces;
 using WebStore.Models;
 
 namespace WebStore.Areas.Admin.Controllers
@@ -38,26 +37,6 @@ namespace WebStore.Areas.Admin.Controllers
         public IActionResult Index()
         {
             return View();
-        }
-
-        [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> ProductList(int page = 1)
-        {
-            int pageSize = 5;
-            IQueryable<Product> productsList = _productDataAdmin.GetAllProducts();
-
-            var count = await productsList.CountAsync();
-            var items = await productsList.Skip((page - 1) * pageSize).Take(pageSize).ToListAsync();
-
-            PageViewModel pageViewModel = new PageViewModel(count, page, pageSize);
-
-            ProductListViewModel viewModel = new ProductListViewModel
-            {
-                PageViewModel = pageViewModel,
-                Products = items
-            };
-
-            return View(viewModel);
         }
 
         [Authorize(Roles = "Admin")]
@@ -110,6 +89,37 @@ namespace WebStore.Areas.Admin.Controllers
 
         [Authorize(Roles = "Admin")]
         public IActionResult OrderItems(int id) => View(_ordersServiceAdmin.GetOrderById(id));
+
+        [Authorize(Roles = "Admin")]
+        public IActionResult DeleteOdrerById(int id)
+        {
+            if (_ordersServiceAdmin.DeleteOdrerById(id))
+                return RedirectToAction("OrdersList");
+            else
+                return Content("Somethink went wrong please, try again!");
+        }
+
+
+
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> ProductList(int page = 1)
+        {
+            int pageSize = 5;
+            IQueryable<Product> productsList = _productDataAdmin.GetAllProducts();
+
+            var count = await productsList.CountAsync();
+            var items = await productsList.Skip((page - 1) * pageSize).Take(pageSize).ToListAsync();
+
+            PageViewModel pageViewModel = new PageViewModel(count, page, pageSize);
+
+            ProductListViewModel viewModel = new ProductListViewModel
+            {
+                PageViewModel = pageViewModel,
+                Products = items
+            };
+
+            return View(viewModel);
+        }
 
         [Authorize(Roles = "Admin")]
         public IActionResult ProductEdit(int? id)
@@ -182,18 +192,5 @@ namespace WebStore.Areas.Admin.Controllers
             else
                 return Content("List have to be empty, because there is test data with Id duplicates");
         }
-
-        [Authorize(Roles = "Admin")]
-        public IActionResult DeleteOdrerById(int id)
-        {
-            if (_ordersServiceAdmin.DeleteOdrerById(id))
-                return RedirectToAction("OrdersList");
-            else
-                return Content("Somethink went wrong please, try again!");
-        }
-
-
-
-
     }
 }

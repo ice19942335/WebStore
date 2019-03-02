@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using WebStore.Entities.Entities;
 using WebStore.Models;
 
-namespace WebStore.Infrastructure.Interfaces
+namespace WebStore.Interfaces
 {
     public interface IProductData
     {

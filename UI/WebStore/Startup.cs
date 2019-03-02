@@ -14,15 +14,15 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using SmartBreadcrumbs;
+using WebStore.Clients.Services;
 using WebStore.Controllers;
 using WebStore.DAL.Context;
 using WebStore.Entities.Entities.Identity;
 using WebStore.Infrastructure.Implementations;
 using WebStore.Infrastructure.Implementations.CookieCartService;
-using WebStore.Infrastructure.Interfaces;
-using WebStore.Infrastructure.Interfaces.Admin;
 using WebStore.Infrastructure.Sql;
 using WebStore.Infrastructure.Sql.Admin;
+using WebStore.Interfaces;
 
 namespace WebStore
 {
@@ -58,6 +58,9 @@ namespace WebStore
             services.AddScoped<IOrdersService, SqlOrdersService>();
             services.AddScoped<IProductDataAdmin, SqlProductDataAdmin>();
             services.AddScoped<IOrdersServiceAdmin, SqlOrdersServiceAdmin>();
+
+            // Добавляем реализацию клиента
+            services.AddTransient<IValuesService, ValuesClient>();
 
             services.AddDbContext<WebStoreContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 

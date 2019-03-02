@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Common\WebStore.Entities\WebStore.Entities.csproj" />
+    <ProjectReference Include="..\WebStore.Models\WebStore.Models.csproj" />
+  </ItemGroup>
+
+</Project>
