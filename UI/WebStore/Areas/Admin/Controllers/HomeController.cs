@@ -9,11 +9,12 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using WebStore.Areas.Admin.Models;
 using WebStore.DAL.Context;
+using WebStore.Entities;
 using WebStore.Entities.Entities;
 using WebStore.Entities.Entities.Identity;
-using WebStore.Infrastructure.Enums;
 using WebStore.Infrastructure.Implementations;
 using WebStore.Interfaces;
+using WebStore.Interfaces.services;
 using WebStore.Models;
 
 namespace WebStore.Areas.Admin.Controllers

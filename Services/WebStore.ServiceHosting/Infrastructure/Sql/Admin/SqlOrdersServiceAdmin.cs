@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using WebStore.DAL.Context;
 using WebStore.Entities.Entities;
-using WebStore.Interfaces;
 using WebStore.Interfaces.services;
 using WebStore.Models.Admin;
 
-namespace WebStore.Infrastructure.Sql.Admin
+namespace WebStore.ServiceHosting.Infrastructure.Sql.Admin
 {
     public class SqlOrdersServiceAdmin : IOrdersServiceAdmin
     {

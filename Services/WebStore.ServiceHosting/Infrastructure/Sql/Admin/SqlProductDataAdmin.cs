@@ -3,12 +3,11 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using WebStore.DAL.Context;
 using WebStore.Entities.Entities;
-using WebStore.Infrastructure.Implementations;
-using WebStore.Interfaces;
 using WebStore.Interfaces.services;
 using WebStore.Models;
+using WebStore.ServiceHosting.Infrastructure.Implementations;
 
-namespace WebStore.Infrastructure.Sql.Admin
+namespace WebStore.ServiceHosting.Infrastructure.Sql.Admin
 {
     public class SqlProductDataAdmin : IProductDataAdmin
     {

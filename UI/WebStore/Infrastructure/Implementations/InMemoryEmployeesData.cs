@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using WebStore.Interfaces;
+using WebStore.Interfaces.services;
 using WebStore.Models;
 
 namespace WebStore.Infrastructure.Implementations
@@ -45,6 +46,16 @@ namespace WebStore.Infrastructure.Implementations
             {
                 _employees.Remove(employee);
             }
+        }
+
+        public EmployeeViewModel UpdateEmployee(int id, EmployeeViewModel entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Commit()
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
 
-namespace WebStore.Interfaces
+namespace WebStore.Interfaces.services
 {
     /// <summary>
     /// Values service

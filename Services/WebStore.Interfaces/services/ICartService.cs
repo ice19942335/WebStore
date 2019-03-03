@@ -1,6 +1,6 @@
 ﻿using WebStore.Models.Cart;
 
-namespace WebStore.Interfaces
+namespace WebStore.Interfaces.services
 {
     public interface ICartService
     {

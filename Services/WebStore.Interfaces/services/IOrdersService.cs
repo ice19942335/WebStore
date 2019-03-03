@@ -3,7 +3,7 @@ using WebStore.Entities.Entities;
 using WebStore.Models.Cart;
 using WebStore.Models.Order;
 
-namespace WebStore.Interfaces
+namespace WebStore.Interfaces.services
 {
     public interface IOrdersService
     {

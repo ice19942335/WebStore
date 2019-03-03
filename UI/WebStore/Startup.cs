@@ -23,6 +23,7 @@ using WebStore.Infrastructure.Implementations.CookieCartService;
 using WebStore.Infrastructure.Sql;
 using WebStore.Infrastructure.Sql.Admin;
 using WebStore.Interfaces;
+using WebStore.Interfaces.services;
 
 namespace WebStore
 {

@@ -1,9 +1,8 @@
 ﻿using System.Linq;
 using WebStore.Entities.Entities;
-using WebStore.Models;
 using WebStore.Models.Admin;
 
-namespace WebStore.Interfaces
+namespace WebStore.Interfaces.services
 {
     public interface IOrdersServiceAdmin
     {

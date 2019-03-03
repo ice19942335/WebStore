@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using WebStore.DAL.Context;
 using WebStore.Entities.Entities;
-using WebStore.Interfaces;
 using WebStore.Interfaces.services;
 using WebStore.Models;
 
-namespace WebStore.Infrastructure.Sql
+namespace WebStore.ServiceHosting.Infrastructure.Sql
 {
     public class SqlProductData : IProductData
     {

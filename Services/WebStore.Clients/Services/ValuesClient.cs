@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using WebStore.Clients.Base;
 using WebStore.Interfaces;
+using WebStore.Interfaces.services;
 
 namespace WebStore.Clients.Services
 {

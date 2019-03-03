@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using WebStore.Entities.Entities;
-using WebStore.Models;
+using WebStore.Models.Order;
 
-namespace WebStore.Interfaces
+namespace WebStore.Interfaces.services
 {
-    public interface IProductData
+    public interface IOrdersData
     {
         /// <summary>
         /// Список секций
@@ -19,17 +19,17 @@ namespace WebStore.Interfaces
         IEnumerable<Brand> GetBrands();
 
         /// <summary>
-        /// Список товаров
+        /// Список заказов
         /// </summary>
-        /// <param name="filter">Фильтр товаров</param>
+        /// <param name="filter">Фильтр заказов</param>
         /// <returns></returns>
-        IEnumerable<Product> GetProducts(ProductFilter filter);
+        IEnumerable<Order> GetOrders(OrderFilter filter);
 
         /// <summary>
         /// Продукт
         /// </summary>
         /// <param name="id">Идентификатор</param>
-        /// <returns>Сущность Product, если нашел, иначе null</returns>
-        ProductViewModel GetProductById(int id);
+        /// <returns>Сущность Order, если нашел, иначе null</returns>
+        OrderViewModel GetOrderById(int id);
     }
 }

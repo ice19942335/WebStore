@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SmartBreadcrumbs;
 using WebStore.Interfaces;
+using WebStore.Interfaces.services;
 using WebStore.Models;
 
 namespace WebStore.Controllers

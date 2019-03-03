@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore.Internal;
-using WebStore.Infrastructure.Enums;
+using WebStore.Entities;
 
 namespace WebStore.Areas.Admin.Models
 {
