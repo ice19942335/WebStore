@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using WebStore.Entities.Entities;
-using WebStore.Models.Order;
+using WebStore.Entities.ViewModels.Order;
 
 namespace WebStore.Interfaces.services
 {

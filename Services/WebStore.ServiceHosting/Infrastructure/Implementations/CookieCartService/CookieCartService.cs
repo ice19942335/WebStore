@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
+using WebStore.Entities.Dto;
 using WebStore.Entities.Entities;
+using WebStore.Entities.ViewModels;
+using WebStore.Entities.ViewModels.Cart;
 using WebStore.Interfaces.services;
-using WebStore.Models;
-using WebStore.Models.Cart;
 
 namespace WebStore.ServiceHosting.Infrastructure.Implementations.CookieCartService
 {
@@ -118,9 +119,9 @@ namespace WebStore.ServiceHosting.Infrastructure.Implementations.CookieCartServi
         public CartViewModel TransformCart()
         {
             var products = _productData.GetProducts(new ProductFilter
-            {
-                Ids = Cart.Items.Select(i => i.ProductId).ToList()
-            })
+                {
+                    Ids = Cart.Items.Select(i => i.ProductId).ToList()
+                })
                 .Select(p => new ProductViewModel
                 {
                     Id = p.Id,
@@ -128,9 +129,11 @@ namespace WebStore.ServiceHosting.Infrastructure.Implementations.CookieCartServi
                     Name = p.Name,
                     Order = p.Order,
                     Price = p.Price,
-                    Brand = p.Brand,
-                    SectionId = p.SectionId,
-                    BrandId = p.BrandId
+                    Brand = new Brand()
+                    {
+                        Id = p.Brand.Id,
+                        Name = p.Brand.Name
+                    }
                 }).ToList();
 
             var r = new CartViewModel

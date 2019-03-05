@@ -1,9 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Collections.Generic;
+using Microsoft.AspNetCore.Mvc;
 using SmartBreadcrumbs;
+using WebStore.Entities.Dto.Order;
+using WebStore.Entities.Entities;
+using WebStore.Entities.ViewModels.Cart;
+using WebStore.Entities.ViewModels.Order;
 using WebStore.Interfaces;
 using WebStore.Interfaces.services;
-using WebStore.Models.Cart;
-using WebStore.Models.Order;
 
 namespace WebStore.Controllers
 {
@@ -59,7 +62,12 @@ namespace WebStore.Controllers
         {
             if (ModelState.IsValid)
             {
-                var orderResult = _ordersService.CreateOrder(model, _cartService.TransformCart(), User.Identity.Name);
+                CreateOrderModel orderModel = new CreateOrderModel()
+                {
+                    OrderViewModel = model,
+                    OrderItems = new List<OrderItemDto>()
+                };
+                var orderResult = _ordersService.CreateOrder(orderModel,  User.Identity.Name);
                 _cartService.RemoveAll();
                 if (orderResult.Id.Equals(0)) //Will be true IF CreateOrder method will return a (New Order)
                     return View("YouHaveToBeRegistredUser");

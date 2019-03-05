@@ -2,8 +2,8 @@
 using Microsoft.EntityFrameworkCore;
 using WebStore.DAL.Context;
 using WebStore.Entities.Entities;
+using WebStore.Entities.ViewModels.Admin;
 using WebStore.Interfaces.services;
-using WebStore.Models.Admin;
 
 namespace WebStore.ServiceHosting.Infrastructure.Sql.Admin
 {

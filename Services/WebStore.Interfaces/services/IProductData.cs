@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
+using WebStore.Entities.Dto;
+using WebStore.Entities.Dto.Product;
 using WebStore.Entities.Entities;
-using WebStore.Models;
 
 namespace WebStore.Interfaces.services
 {
@@ -23,13 +24,13 @@ namespace WebStore.Interfaces.services
         /// </summary>
         /// <param name="filter">Фильтр товаров</param>
         /// <returns></returns>
-        IEnumerable<Product> GetProducts(ProductFilter filter);
+        IEnumerable<ProductDto> GetProducts(ProductFilter filter);
 
         /// <summary>
         /// Продукт
         /// </summary>
         /// <param name="id">Идентификатор</param>
         /// <returns>Сущность Product, если нашел, иначе null</returns>
-        ProductViewModel GetProductById(int id);
+        ProductDto GetProductById(int id);
     }
 }

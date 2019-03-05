@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using WebStore.Entities.ViewModels;
 using WebStore.Interfaces.services;
-using WebStore.Models;
 
 namespace WebStore.ServiceHosting.Infrastructure.Implementations
 {

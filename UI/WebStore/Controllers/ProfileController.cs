@@ -4,9 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using WebStore.Entities.ViewModels.Order;
 using WebStore.Interfaces;
 using WebStore.Interfaces.services;
-using WebStore.Models.Order;
 
 namespace WebStore.Controllers
 {

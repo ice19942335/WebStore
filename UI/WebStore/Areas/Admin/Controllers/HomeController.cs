@@ -10,12 +10,11 @@ using Microsoft.EntityFrameworkCore;
 using WebStore.Areas.Admin.Models;
 using WebStore.DAL.Context;
 using WebStore.Entities;
+using WebStore.Entities.Dto.Product;
 using WebStore.Entities.Entities;
 using WebStore.Entities.Entities.Identity;
-using WebStore.Infrastructure.Implementations;
-using WebStore.Interfaces;
+using WebStore.Entities.ViewModels;
 using WebStore.Interfaces.services;
-using WebStore.Models;
 
 namespace WebStore.Areas.Admin.Controllers
 {
@@ -125,7 +124,7 @@ namespace WebStore.Areas.Admin.Controllers
         [Authorize(Roles = "Admin")]
         public IActionResult ProductEdit(int? id)
         {
-            ProductViewModel model;
+            ProductDto model;
             if (id.HasValue)
             {
                 model = _productData.GetProductById(id.Value);
@@ -134,7 +133,7 @@ namespace WebStore.Areas.Admin.Controllers
             }
             else
             {
-                model = new ProductViewModel();
+                model = new ProductDto();
             }
 
             return View("ProductEdit", model);

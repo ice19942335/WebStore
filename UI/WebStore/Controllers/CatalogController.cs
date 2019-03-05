@@ -6,9 +6,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SmartBreadcrumbs;
 using WebStore.Entities.Entities;
+using WebStore.Entities.ViewModels;
 using WebStore.Interfaces;
 using WebStore.Interfaces.services;
-using WebStore.Models;
 
 namespace WebStore.Controllers
 {
@@ -57,7 +57,7 @@ namespace WebStore.Controllers
                 Name = product.Name,
                 Order = product.Order,
                 Price = product.Price,
-                Brand = product.Brand
+                Brand = new Brand() { Id = product.Id, Name = product.Name, Order = product.Order }
             });
         }
     }

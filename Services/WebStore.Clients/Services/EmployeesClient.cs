@@ -4,8 +4,8 @@ using System.Net.Http;
 using System.Text;
 using Microsoft.Extensions.Configuration;
 using WebStore.Clients.Base;
+using WebStore.Entities.ViewModels;
 using WebStore.Interfaces.services;
-using WebStore.Models;
 
 namespace WebStore.Clients.Services
 {

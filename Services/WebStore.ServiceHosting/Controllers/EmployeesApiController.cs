@@ -4,8 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using WebStore.Entities.ViewModels;
 using WebStore.Interfaces.services;
-using WebStore.Models;
 
 namespace WebStore.ServiceHosting.Controllers
 {

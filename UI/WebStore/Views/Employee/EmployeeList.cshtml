@@ -1,5 +1,6 @@
 ﻿@using Microsoft.AspNetCore.Identity.EntityFrameworkCore
-@model IEnumerable<EmployeeViewModel>
+@using WebStore.Entities.ViewModels
+@model IEnumerable<WebStore.Entities.ViewModels.EmployeeViewModel>
 
 @if (User.IsInRole("Admin"))
 {

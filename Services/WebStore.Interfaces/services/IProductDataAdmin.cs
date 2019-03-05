@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 using WebStore.Entities.Entities;
-using WebStore.Models;
+using WebStore.Entities.ViewModels;
 
 namespace WebStore.Interfaces.services
 {

@@ -11,7 +11,6 @@ using Microsoft.EntityFrameworkCore;
 using SmartBreadcrumbs;
 using WebStore.Interfaces;
 using WebStore.Interfaces.services;
-using WebStore.Models;
 
 namespace WebStore.Controllers
 {

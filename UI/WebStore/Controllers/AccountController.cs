@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using SmartBreadcrumbs;
 using WebStore.Entities.Entities.Identity;
-using WebStore.Models.Account;
+using WebStore.Entities.ViewModels.Account;
 
 namespace WebStore.Controllers
 {

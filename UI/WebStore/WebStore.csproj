@@ -29,7 +29,6 @@
     <ProjectReference Include="..\..\Services\WebStore.Clients\WebStore.Clients.csproj" />
     <ProjectReference Include="..\..\Services\WebStore.DAL\WebStore.DAL.csproj" />
     <ProjectReference Include="..\..\Services\WebStore.Interfaces\WebStore.Interfaces.csproj" />
-    <ProjectReference Include="..\..\Services\WebStore.Models\WebStore.Models.csproj" />
     <ProjectReference Include="..\..\Services\WebStore.ServiceHosting\WebStore.ServiceHosting.csproj" />
   </ItemGroup>
 

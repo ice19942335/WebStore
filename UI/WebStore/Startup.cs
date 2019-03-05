@@ -18,12 +18,12 @@ using WebStore.Clients.Services;
 using WebStore.Controllers;
 using WebStore.DAL.Context;
 using WebStore.Entities.Entities.Identity;
-using WebStore.Infrastructure.Implementations;
-using WebStore.Infrastructure.Implementations.CookieCartService;
-using WebStore.Infrastructure.Sql;
-using WebStore.Infrastructure.Sql.Admin;
 using WebStore.Interfaces;
 using WebStore.Interfaces.services;
+using WebStore.ServiceHosting.Infrastructure.Implementations;
+using WebStore.ServiceHosting.Infrastructure.Implementations.CookieCartService;
+using WebStore.ServiceHosting.Infrastructure.Sql;
+using WebStore.ServiceHosting.Infrastructure.Sql.Admin;
 
 namespace WebStore
 {
@@ -60,11 +60,15 @@ namespace WebStore
             services.AddScoped<IProductDataAdmin, SqlProductDataAdmin>();
             services.AddScoped<IOrdersServiceAdmin, SqlOrdersServiceAdmin>();
 
-            // Добавляем реализацию клиента
+            //Client
             services.AddTransient<IValuesService, ValuesClient>();
+            services.AddTransient<IProductData, ProductsClient>();
+            services.AddTransient<IOrdersService, OrdersClient>();
 
+            // DB context
             services.AddDbContext<WebStoreContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
+            //Identity
             services.AddIdentity<User, IdentityRole>()
                 .AddEntityFrameworkStores<WebStoreContext>()
                 .AddDefaultTokenProviders();

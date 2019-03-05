@@ -3,8 +3,8 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using WebStore.DAL.Context;
 using WebStore.Entities.Entities;
+using WebStore.Entities.ViewModels;
 using WebStore.Interfaces.services;
-using WebStore.Models;
 using WebStore.ServiceHosting.Infrastructure.Implementations;
 
 namespace WebStore.ServiceHosting.Infrastructure.Sql.Admin

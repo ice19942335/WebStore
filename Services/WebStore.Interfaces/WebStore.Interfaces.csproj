@@ -6,7 +6,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Common\WebStore.Entities\WebStore.Entities.csproj" />
-    <ProjectReference Include="..\WebStore.Models\WebStore.Models.csproj" />
   </ItemGroup>
 
 </Project>
