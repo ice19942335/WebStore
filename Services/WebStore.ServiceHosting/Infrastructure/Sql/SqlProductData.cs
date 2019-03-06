@@ -55,7 +55,8 @@ namespace WebStore.ServiceHosting.Infrastructure.Sql
                 Brand = p.BrandId.HasValue ? new BrandDto()
                 {
                     Id = p.Brand.Id,
-                    Name = p.Brand.Name
+                    Name = p.Brand.Name,
+                    Order = p.Brand.Order
                 } : null
             }).ToList();
         }
@@ -78,7 +79,8 @@ namespace WebStore.ServiceHosting.Infrastructure.Sql
                 dto.Brand = new BrandDto()
                 {
                     Id = product.Brand.Id,
-                    Name = product.Brand.Name
+                    Name = product.Brand.Name,
+                    Order = product.Brand.Order
                 };
             return dto;
         }

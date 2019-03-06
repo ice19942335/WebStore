@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace WebStore.Entities.Entities
+﻿namespace WebStore.Entities.Entities
 {
     public class CartItem
     {

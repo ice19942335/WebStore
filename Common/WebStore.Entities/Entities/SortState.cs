@@ -1,4 +1,4 @@
-﻿namespace WebStore.Entities
+﻿namespace WebStore.Entities.Entities
 {
     public enum SortState
     {

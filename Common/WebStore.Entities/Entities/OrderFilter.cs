@@ -1,6 +1,4 @@
-﻿
-
-namespace WebStore.Entities.Entities
+﻿namespace WebStore.Entities.Entities
 {
     /// <summary>Orders Filter</summary>
     public class OrderFilter

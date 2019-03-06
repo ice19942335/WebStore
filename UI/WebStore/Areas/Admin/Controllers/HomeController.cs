@@ -7,13 +7,13 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using WebStore.Areas.Admin.Models;
 using WebStore.DAL.Context;
 using WebStore.Entities;
 using WebStore.Entities.Dto.Product;
 using WebStore.Entities.Entities;
 using WebStore.Entities.Entities.Identity;
 using WebStore.Entities.ViewModels;
+using WebStore.Entities.ViewModels.Admin;
 using WebStore.Interfaces.services;
 
 namespace WebStore.Areas.Admin.Controllers
@@ -99,8 +99,6 @@ namespace WebStore.Areas.Admin.Controllers
                 return Content("Somethink went wrong please, try again!");
         }
 
-
-
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> ProductList(int page = 1)
         {
@@ -124,19 +122,35 @@ namespace WebStore.Areas.Admin.Controllers
         [Authorize(Roles = "Admin")]
         public IActionResult ProductEdit(int? id)
         {
-            ProductDto model;
+            ProductDto productDto;
             if (id.HasValue)
             {
-                model = _productData.GetProductById(id.Value);
-                if (ReferenceEquals(model, null))
+                productDto = _productData.GetProductById(id.Value);
+                
+                if (ReferenceEquals(productDto, null))
                     return NotFound();
+                ProductViewModel model = new ProductViewModel()
+                {
+                    Id = productDto.Id,
+                    Name = productDto.Name,
+                    Order = productDto.Order,
+                    ImageUrl = productDto.ImageUrl,
+                    Price = productDto.Price,
+                    Brand = new Brand()
+                    {
+                        Id = productDto.Brand.Id,
+                        Name = productDto.Brand.Name,
+                        Order = productDto.Brand.Order
+                    },
+                    SectionId = productDto.SectionId,
+                    BrandId = productDto.BrandId
+                };
+                return View("ProductEdit", model);
             }
             else
             {
-                model = new ProductDto();
+                return View("ProductEdit", new ProductViewModel());
             }
-
-            return View("ProductEdit", model);
         }
 
         [HttpPost]

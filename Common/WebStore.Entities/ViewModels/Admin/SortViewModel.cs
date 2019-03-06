@@ -1,4 +1,6 @@
-﻿namespace WebStore.Entities.ViewModels.Admin
+﻿using WebStore.Entities.Entities;
+
+namespace WebStore.Entities.ViewModels.Admin
 {
     public class SortViewModel
     {

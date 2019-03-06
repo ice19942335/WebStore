@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Text;
-using WebStore.Entities.Entities.Base;
-
-namespace WebStore.Entities.Dto.Order
+﻿namespace WebStore.Entities.Dto.Order
 {
     public class OrderItemDto
     {

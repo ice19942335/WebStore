@@ -16,30 +16,33 @@ namespace WebStore.ServiceHosting.Infrastructure.Sql
     public class SqlOrdersService : IOrdersService
     {
         private readonly WebStoreContext _context;
-        private readonly UserManager<User> _userManager; public SqlOrdersService(WebStoreContext context, UserManager<User>
-            userManager)
+        private readonly UserManager<User> _userManager;
+
+        public SqlOrdersService(WebStoreContext context, UserManager<User> userManager)
         {
             _context = context;
             _userManager = userManager;
         }
+
         public IEnumerable<OrderDto> GetUserOrders(string userName)
         {
             return _context.Orders.Include("User").Include("OrderItems").Where(o
                 => o.User.UserName.Equals(userName)).Select(o => new OrderDto()
-            {
-                Id = o.Id,
-                Name = o.Name,
-                Address = o.Address,
-                Date = o.Date,
-                Phone = o.Phone,
-                OrderItems = o.OrderItems.Select(oi => new OrderItemDto()
                 {
-                    Id = oi.Id,
-                    Price = oi.Price,
-                    Quantity = oi.Quantity
-                })
-            }).ToList();
+                    Id = o.Id,
+                    Name = o.Name,
+                    Address = o.Address,
+                    Date = o.Date,
+                    Phone = o.Phone,
+                    OrderItems = o.OrderItems.Select(oi => new OrderItemDto()
+                    {
+                        Id = oi.Id,
+                        Price = oi.Price,
+                        Quantity = oi.Quantity
+                    })
+                }).ToList();
         }
+
         public OrderDto GetOrderById(int id)
         {
             var order = _context.Orders.Include("OrderItems").FirstOrDefault(o
@@ -60,6 +63,7 @@ namespace WebStore.ServiceHosting.Infrastructure.Sql
                 })
             };
         }
+
         public OrderDto CreateOrder(CreateOrderModel orderModel, string
             userName)
         {
@@ -67,7 +71,7 @@ namespace WebStore.ServiceHosting.Infrastructure.Sql
             using (var transaction = _context.Database.BeginTransaction())
             {
                 var order = new Order()
-                    {
+                {
                     Address = orderModel.OrderViewModel.Address,
                     Name = orderModel.OrderViewModel.Name,
                     Date = DateTime.Now,
