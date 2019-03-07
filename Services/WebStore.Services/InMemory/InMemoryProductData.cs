@@ -1,13 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using WebStore.Entities.Dto;
 using WebStore.Entities.Dto.Brand;
 using WebStore.Entities.Dto.Product;
 using WebStore.Entities.Entities;
-using WebStore.Entities.ViewModels;
 using WebStore.Interfaces.services;
 
-namespace WebStore.ServiceHosting.Infrastructure.Implementations
+namespace WebStore.Services.InMemory
 {
     public class InMemoryProductData : IProductData
     {

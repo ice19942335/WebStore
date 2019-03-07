@@ -5,7 +5,7 @@ using WebStore.Entities.Entities;
 using WebStore.Entities.ViewModels.Admin;
 using WebStore.Interfaces.services;
 
-namespace WebStore.ServiceHosting.Infrastructure.Sql.Admin
+namespace WebStore.Services.Sql.Admin
 {
     public class SqlOrdersServiceAdmin : IOrdersServiceAdmin
     {

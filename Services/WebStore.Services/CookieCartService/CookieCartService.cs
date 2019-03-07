@@ -1,15 +1,14 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
-using WebStore.Entities.Dto;
 using WebStore.Entities.Entities;
 using WebStore.Entities.ViewModels;
 using WebStore.Entities.ViewModels.Cart;
 using WebStore.Interfaces.services;
 
-namespace WebStore.ServiceHosting.Infrastructure.Implementations.CookieCartService
+namespace WebStore.Services.CookieCartService
 {
     public class CookieCartService : ICartService
     {
@@ -87,6 +86,7 @@ namespace WebStore.ServiceHosting.Infrastructure.Implementations.CookieCartServi
 
             Cart = cart;
         }
+
         public void RemoveFromCart(int id)
         {
             var cart = Cart;

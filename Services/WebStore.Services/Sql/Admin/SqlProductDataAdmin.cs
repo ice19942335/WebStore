@@ -5,9 +5,9 @@ using WebStore.DAL.Context;
 using WebStore.Entities.Entities;
 using WebStore.Entities.ViewModels;
 using WebStore.Interfaces.services;
-using WebStore.ServiceHosting.Infrastructure.Implementations;
+using WebStore.Services.InMemory;
 
-namespace WebStore.ServiceHosting.Infrastructure.Sql.Admin
+namespace WebStore.Services.Sql.Admin
 {
     public class SqlProductDataAdmin : IProductDataAdmin
     {

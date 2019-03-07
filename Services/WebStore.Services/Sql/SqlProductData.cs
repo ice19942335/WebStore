@@ -2,13 +2,12 @@
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using WebStore.DAL.Context;
-using WebStore.Entities.Dto;
 using WebStore.Entities.Dto.Brand;
 using WebStore.Entities.Dto.Product;
 using WebStore.Entities.Entities;
 using WebStore.Interfaces.services;
 
-namespace WebStore.ServiceHosting.Infrastructure.Sql
+namespace WebStore.Services.Sql
 
 {
     public class SqlProductData : IProductData

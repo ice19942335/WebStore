@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using SmartBreadcrumbs;
 using WebStore.Entities.Dto.Order;
 using WebStore.Entities.Entities;
+using WebStore.Entities.ViewModels;
 using WebStore.Entities.ViewModels.Cart;
 using WebStore.Entities.ViewModels.Order;
 using WebStore.Interfaces;
@@ -62,15 +64,32 @@ namespace WebStore.Controllers
         {
             if (ModelState.IsValid)
             {
+
+                Dictionary<ProductViewModel, int> productViewModelList = _cartService.TransformCart().Items;
+                List<OrderItemDto> productDtoList = new List<OrderItemDto>();
+
+                foreach (var productViewModel in productViewModelList)
+                {
+                    productDtoList.Add(new OrderItemDto
+                    {
+                        Id = productViewModel.Key.Id,
+                        Price = productViewModel.Key.Price,
+                        Quantity = productViewModel.Value
+                    });
+                }
+                
                 CreateOrderModel orderModel = new CreateOrderModel()
                 {
                     OrderViewModel = model,
-                    OrderItems = new List<OrderItemDto>()
+                    OrderItems = productDtoList
                 };
+
                 var orderResult = _ordersService.CreateOrder(orderModel,  User.Identity.Name);
                 _cartService.RemoveAll();
+
                 if (orderResult.Id.Equals(0)) //Will be true IF CreateOrder method will return a (New Order)
                     return View("YouHaveToBeRegistredUser");
+
                 return RedirectToAction("OrderConfirmed", new { id = orderResult.Id });
             }
 

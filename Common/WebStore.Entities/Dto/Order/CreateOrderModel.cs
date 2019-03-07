@@ -7,7 +7,6 @@ namespace WebStore.Entities.Dto.Order
     {
         public OrderViewModel OrderViewModel { get; set; }
 
-        /// <summary>Заказы</summary>
         public List<OrderItemDto> OrderItems { get; set; }
     }
 }

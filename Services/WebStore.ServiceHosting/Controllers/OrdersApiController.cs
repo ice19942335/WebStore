@@ -30,8 +30,7 @@ namespace WebStore.ServiceHosting.Controllers
             return _ordersService.GetOrderById(id);
         }
         [HttpPost("{userName?}")]
-        public OrderDto CreateOrder([FromBody]CreateOrderModel orderModel,
-            string userName)
+        public OrderDto CreateOrder([FromBody]CreateOrderModel orderModel, string userName)
         {
             return _ordersService.CreateOrder(orderModel, userName);
         }

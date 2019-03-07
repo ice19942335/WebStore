@@ -7,11 +7,9 @@ using WebStore.DAL.Context;
 using WebStore.Entities.Dto.Order;
 using WebStore.Entities.Entities;
 using WebStore.Entities.Entities.Identity;
-using WebStore.Entities.ViewModels.Cart;
-using WebStore.Entities.ViewModels.Order;
 using WebStore.Interfaces.services;
 
-namespace WebStore.ServiceHosting.Infrastructure.Sql
+namespace WebStore.Services.Sql
 {
     public class SqlOrdersService : IOrdersService
     {
@@ -64,10 +62,10 @@ namespace WebStore.ServiceHosting.Infrastructure.Sql
             };
         }
 
-        public OrderDto CreateOrder(CreateOrderModel orderModel, string
-            userName)
+        public OrderDto CreateOrder(CreateOrderModel orderModel, string userName)
         {
             var user = _userManager.FindByNameAsync(userName).Result;
+
             using (var transaction = _context.Database.BeginTransaction())
             {
                 var order = new Order()
@@ -78,13 +76,16 @@ namespace WebStore.ServiceHosting.Infrastructure.Sql
                     Phone = orderModel.OrderViewModel.Phone,
                     User = user
                 };
+
                 _context.Orders.Add(order);
+
                 foreach (var item in orderModel.OrderItems)
                 {
-                    var product = _context.Products.FirstOrDefault(p =>
-                        p.Id.Equals(item.Id));
+                    var product = _context.Products.FirstOrDefault(p => p.Id.Equals(item.Id));
+
                     if (product == null)
-                        throw new InvalidOperationException("Продукт не найден в базе");
+                        throw new InvalidOperationException($"Продукт id:{item.Id} отсутвтует в базе");
+
                     var orderItem = new OrderItem()
                     {
                         Order = order,
@@ -92,10 +93,13 @@ namespace WebStore.ServiceHosting.Infrastructure.Sql
                         Quantity = item.Quantity,
                         Product = product
                     };
+
                     _context.OrderItems.Add(orderItem);
                 }
+
                 _context.SaveChanges();
                 transaction.Commit();
+
                 return GetOrderById(order.Id);
             }
         }

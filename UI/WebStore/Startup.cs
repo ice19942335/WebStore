@@ -1,29 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc.Internal;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.FileProviders;
 using SmartBreadcrumbs;
 using WebStore.Clients.Services;
-using WebStore.Controllers;
 using WebStore.DAL.Context;
 using WebStore.Entities.Entities.Identity;
-using WebStore.Interfaces;
 using WebStore.Interfaces.services;
-using WebStore.ServiceHosting.Infrastructure.Implementations;
-using WebStore.ServiceHosting.Infrastructure.Implementations.CookieCartService;
-using WebStore.ServiceHosting.Infrastructure.Sql;
-using WebStore.ServiceHosting.Infrastructure.Sql.Admin;
+using WebStore.Services.CookieCartService;
+using WebStore.Services.InMemory;
+using WebStore.Services.Sql;
+using WebStore.Services.Sql.Admin;
 
 namespace WebStore
 {

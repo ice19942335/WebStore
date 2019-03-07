@@ -17,9 +17,8 @@ using WebStore.DAL.Context;
 using WebStore.Entities.Entities.Identity;
 using WebStore.Interfaces;
 using WebStore.Interfaces.services;
-using WebStore.ServiceHosting.Infrastructure.Implementations;
-using WebStore.ServiceHosting.Infrastructure.Implementations.CookieCartService;
-using WebStore.ServiceHosting.Infrastructure.Sql;
+using WebStore.Services.CookieCartService;
+using WebStore.Services.Sql;
 
 namespace WebStore.ServiceHosting
 {

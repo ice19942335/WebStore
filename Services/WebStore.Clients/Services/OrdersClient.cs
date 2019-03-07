@@ -28,8 +28,7 @@ namespace WebStore.Clients.Services
             var result = Get<OrderDto>(url);
             return result;
         }
-        public OrderDto CreateOrder(CreateOrderModel orderModel, string
-            userName)
+        public OrderDto CreateOrder(CreateOrderModel orderModel, string userName)
         {
             var url = $"{ServiceAddress}/{userName}";
             var response = Post(url, orderModel);
