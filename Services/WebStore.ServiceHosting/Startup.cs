@@ -18,43 +18,39 @@ using WebStore.Entities.Entities.Identity;
 using WebStore.Interfaces;
 using WebStore.Interfaces.services;
 using WebStore.Services.CookieCartService;
+using WebStore.Services.InMemory;
 using WebStore.Services.Sql;
+using WebStore.Services.Sql.Admin;
 
 namespace WebStore.ServiceHosting
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
-        {
-            Configuration = configuration;
-        }
-
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
+        public Startup(IConfiguration configuration) => Configuration = configuration;
+
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-            // Добавляем EF Core
-            services.AddDbContext<WebStoreContext>(opt =>
-                opt.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<WebStoreContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            // Добавляем разрешение зависимостей
-            //services.AddSingleton<IEmployeesData, InMemoryEmployeesData>();
-            services.AddTransient<IEmployeesData, EmployeesClient>();
-            services.AddScoped<IProductData, SqlProductData>();
-            services.AddScoped<IOrdersService, SqlOrdersService>();
-
-            // Настройка Identity
             services.AddIdentity<User, IdentityRole>()
                 .AddEntityFrameworkStores<WebStoreContext>()
                 .AddDefaultTokenProviders();
 
-            // Настройки для корзины
-            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-            services.AddScoped<ICartService, CookieCartService>();
+            services.AddSingleton<IEmployeesData, InMemoryEmployeesData>();
 
+            services.AddScoped<IProductData, SqlProductData>();
+            services.AddScoped<IOrdersService, SqlOrdersService>();
+
+            //Admin
+            services.AddScoped<IProductDataAdmin, SqlProductDataAdmin>();
+            services.AddScoped<IOrdersServiceAdmin, SqlOrdersServiceAdmin>();
+
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>(); // Добавляем сервис доступа к контексту http-запроса для обеспечения возможности использования нашего сервиса работы с корзиной покупателя
+            services.AddScoped<ICartService, CookieCartService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -64,7 +60,12 @@ namespace WebStore.ServiceHosting
             {
                 app.UseDeveloperExceptionPage();
             }
+            else
+            {
+                app.UseHsts(); //see https://aka.ms/aspnetcore-hsts
+            }
 
+            app.UseHttpsRedirection();
             app.UseMvc();
         }
     }

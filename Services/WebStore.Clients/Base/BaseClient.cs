@@ -34,8 +34,8 @@ namespace WebStore.Clients.Base
                 BaseAddress = new Uri(configuration["ClientAddress"])
             };
             Client.DefaultRequestHeaders.Accept.Clear();
-            // Устанавливаем хедер, который будет говорить серверу, чтобы он
-            //отправлял данные в формате json
+
+            // Устанавливаем хедер, который будет говорить серверу, чтобы он отправлял данные в формате json
             Client.DefaultRequestHeaders.Accept.Add(new
                 MediaTypeWithQualityHeaderValue("application/json"));
         }

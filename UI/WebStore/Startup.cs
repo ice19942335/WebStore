@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SmartBreadcrumbs;
 using WebStore.Clients.Services;
+using WebStore.Clients.Services.Users;
 using WebStore.DAL.Context;
 using WebStore.Entities.Entities.Identity;
 using WebStore.Interfaces.services;
@@ -24,7 +25,6 @@ namespace WebStore
         /// Добавляем свойство для доступа к конфигурации
         /// </summary>
         public IConfiguration Configuration { get; }
-
         /// <summary>
         /// Добавляем новый конструктор, принимающий интерфейс IConfiguration
         /// </summary>
@@ -33,101 +33,87 @@ namespace WebStore
         {
             Configuration = configuration;
         }
-
-        // This method gets called by the runtime. Use this method to add services to the container.
-        // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            //Добавляем сервисы, необходимые для mvc
+            // Добавляем сервисы, необходимые для mvc
             services.AddMvc();
-
-            //BreadCrumbs
-            services.UseBreadcrumbs(GetType().Assembly);
-
-            //Добавляем разрешение зависимости
-            services.AddSingleton<IEmployeesData, InMemoryEmployeesData>();
-            services.AddScoped<IProductData, SqlProductData>();
-            services.AddScoped<IOrdersService, SqlOrdersService>();
-            services.AddScoped<IProductDataAdmin, SqlProductDataAdmin>();
-            services.AddScoped<IOrdersServiceAdmin, SqlOrdersServiceAdmin>();
-
-            //Client
+            // Добавляем реализацию клиента
             services.AddTransient<IValuesService, ValuesClient>();
+            services.AddTransient<IEmployeesData, EmployeesClient>();
             services.AddTransient<IProductData, ProductsClient>();
             services.AddTransient<IOrdersService, OrdersClient>();
-
-            // DB context
-            services.AddDbContext<WebStoreContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-
-            //Identity
+            services.AddTransient<IUsersClient, UsersClient>();
+            // Настройка Identity
             services.AddIdentity<User, IdentityRole>()
-                .AddEntityFrameworkStores<WebStoreContext>()
                 .AddDefaultTokenProviders();
-
+            services.AddTransient<IUserStore<User>, UsersClient>();
+            services.AddTransient<IUserRoleStore<User>, UsersClient>();
+            services.AddTransient<IUserClaimStore<User>, UsersClient>();
+            services.AddTransient<IUserPasswordStore<User>, UsersClient>();
+            services.AddTransient<IUserTwoFactorStore<User>, UsersClient>();
+            services.AddTransient<IUserEmailStore<User>, UsersClient>();
+            services.AddTransient<IUserPhoneNumberStore<User>, UsersClient>();
+            services.AddTransient<IUserLoginStore<User>, UsersClient>();
+            services.AddTransient<IUserLockoutStore<User>, UsersClient>();
+            services.AddTransient<IRoleStore<IdentityRole>, RolesClient>();
             services.Configure<IdentityOptions>(options =>
             {
                 // Password settings
-                options.Password.RequiredLength = 3;
-                options.Password.RequiredUniqueChars = 1;
-                options.Password.RequireDigit = true;
+                options.Password.RequiredLength = 6;
+                options.Password.RequireDigit = false;
                 options.Password.RequireLowercase = false;
-                options.Password.RequireUppercase = false;
                 options.Password.RequireNonAlphanumeric = false;
-
-
+                options.Password.RequireUppercase = false;
                 // Lockout settings
-                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(30);
+                options.Lockout.DefaultLockoutTimeSpan =
+                    TimeSpan.FromMinutes(30);
                 options.Lockout.MaxFailedAccessAttempts = 10;
                 options.Lockout.AllowedForNewUsers = true;
-
                 // User settings
-                //options.User.RequireUniqueEmail = true;
+                options.User.RequireUniqueEmail = true;
             });
-
             services.ConfigureApplicationCookie(options =>
             {
                 // Cookie settings
                 options.Cookie.HttpOnly = true;
                 options.Cookie.Expiration = TimeSpan.FromDays(150);
-                options.LoginPath = "/Account/Login"; // If the LoginPath is not set here, ASP.NET Core will default to /Account/Login
-                options.LogoutPath = "/Account/Logout"; // If the LogoutPath is not set here, ASP.NET Core will default to /Account/Logout
-                options.AccessDeniedPath = "/Account/AccessDenied"; // If the AccessDeniedPath is not set here, ASP.NET Core will default to /Account/AccessDenied
+                // If the LoginPath is not set here, ASP.NET Core will default to / Account / Login
+                options.LoginPath = "/Account/Login";
+                // If the LogoutPath is not set here, ASP.NET Core will default to/Account/Logout
+                options.LogoutPath = "/Account/Logout";
+                // If the AccessDeniedPath is not set here, ASP.NET Core will default to / Account / AccessDenied
+                options.AccessDeniedPath = "/Account/AccessDenied";
                 options.SlidingExpiration = true;
             });
-
-            //Настройки для корзины
+            // Настройки для корзины
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddScoped<ICartService, CookieCartService>();
+
+            //BreadCrumbs
+            services.UseBreadcrumbs(GetType().Assembly);
         }
-
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env,
+            IServiceProvider svp)
         {
-            //Проверка среды выполнения, если dev то выкидывать ошибку в браузере
             if (env.IsDevelopment())
+            {
                 app.UseDeveloperExceptionPage();
-
-            // подключаем файлы по умолчанию
-            app.UseDefaultFiles();
-            // подключаем статические файлы
+            }
+            // Добавляем расширение для использования статических файлов, т.к. appsettings.json - это статический файл
             app.UseStaticFiles();
-            //Welcome page
             app.UseWelcomePage("/welcome");
-            //Autentification
             app.UseAuthentication();
-            //Маршрутизатор
-            app.UseMvc(routes => 
+            // Добавляем обработку запросов в mvc-формате
+            app.UseMvc(routes =>
             {
                 routes.MapRoute(
                     name: "areas",
-                    template: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
-                );
-
+                    template: "{area:exists}/{controller=Home}/{action=Index}");
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}"
-                );
+                    template: "{controller=Home}/{action=Index}/{id?}");
             });
         }
     }
 }
+
