@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using SmartBreadcrumbs;
 using WebStore.Entities.Entities.Identity;
 using WebStore.Entities.ViewModels.Account;
@@ -15,11 +16,13 @@ namespace WebStore.Controllers
     {
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
+        private readonly ILogger<AccountController> _logger;
 
-        public AccountController(UserManager<User> userManager, SignInManager<User> SignInManager)
+        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, ILogger<AccountController> logger)
         {
             _userManager = userManager;
-            _signInManager = SignInManager;
+            _signInManager = signInManager;
+            _logger = logger;
         }
 
         [HttpGet] public IActionResult Login() => View(new LoginUserViewModel());
@@ -28,12 +31,24 @@ namespace WebStore.Controllers
         public async Task<IActionResult> Login(LoginUserViewModel model)
         {
             if (!ModelState.IsValid) return View(model);
+
+            _logger.LogInformation(new EventId(0, "Login"), $"{model.UserName} trying to LogIn");
+
             var loginResult = await _signInManager.PasswordSignInAsync(
                 model.UserName, model.Password, model.RememberMe, false);
             if (loginResult.Succeeded)
+            {
+                _logger.LogInformation(new EventId(1, "Login"), $"{model.UserName} has been fully authorized");
+
                 return Url.IsLocalUrl(model.ReturnUrl)
                     ? RedirectToAction(model.ReturnUrl)
                     : RedirectToAction("Index", "Home");
+            }
+            else
+            {
+                _logger.LogWarning(new EventId(2, "Login"), $"{model.UserName} was not authorized");
+            }
+
             ModelState.AddModelError("", "Неверное имя пользователя либо пароль");
             return View(model);
         }

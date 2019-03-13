@@ -12,10 +12,10 @@ namespace WebStore.ServiceHosting.Controllers
 
     [Produces("application/json")]
     [Route("api/orders")]
-    public class OrdersApiController : Controller, IOrdersService
+    public class OrdersController : Controller, IOrdersService
     {
         private readonly IOrdersService _ordersService;
-        public OrdersApiController(IOrdersService ordersService)
+        public OrdersController(IOrdersService ordersService)
         {
             _ordersService = ordersService;
         }

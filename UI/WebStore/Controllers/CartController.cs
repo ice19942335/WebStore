@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using SmartBreadcrumbs;
 using WebStore.Entities.Dto.Order;
 using WebStore.Entities.Entities;
@@ -60,7 +61,7 @@ namespace WebStore.Controllers
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        public IActionResult CheckOut(OrderViewModel model)
+        public IActionResult CheckOut(OrderViewModel model, [FromServices] ILogger<CartController> logger)
         {
             if (ModelState.IsValid)
             {
@@ -90,6 +91,7 @@ namespace WebStore.Controllers
                 if (orderResult.Id.Equals(0)) //Will be true IF CreateOrder method will return a (New Order)
                     return View("YouHaveToBeRegistredUser");
 
+                logger.LogInformation(new EventId(0), "Order creating...");
                 return RedirectToAction("OrderConfirmed", new { id = orderResult.Id });
             }
 

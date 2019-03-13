@@ -11,11 +11,11 @@ namespace WebStore.ServiceHosting.Controllers
 {
     [Produces("application/json")]
     [Route("api/employees")]
-    public class EmployeesApiController : Controller, IEmployeesData
+    public class EmployeesController : Controller, IEmployeesData
     {
         private readonly IEmployeesData _employeesData;
 
-        public EmployeesApiController(IEmployeesData employeesData)
+        public EmployeesController(IEmployeesData employeesData)
         {
             _employeesData = employeesData ?? throw new
                                  ArgumentNullException(nameof(employeesData));

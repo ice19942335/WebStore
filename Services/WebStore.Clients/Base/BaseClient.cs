@@ -61,8 +61,7 @@ namespace WebStore.Clients.Base
             response.EnsureSuccessStatusCode();
             return response;
         }
-        protected async Task<HttpResponseMessage> PostAsync<T>(string url, T
-            value)
+        protected async Task<HttpResponseMessage> PostAsync<T>(string url, T value)
         {
             var response = await Client.PostAsJsonAsync(url, value);
             response.EnsureSuccessStatusCode();
@@ -74,8 +73,7 @@ namespace WebStore.Clients.Base
             response.EnsureSuccessStatusCode();
             return response;
         }
-        protected async Task<HttpResponseMessage> PutAsync<T>(string url, T
-            value)
+        protected async Task<HttpResponseMessage> PutAsync<T>(string url, T value)
         {
             var response = await Client.PutAsJsonAsync(url, value);
             response.EnsureSuccessStatusCode();

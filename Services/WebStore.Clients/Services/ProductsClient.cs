@@ -15,7 +15,7 @@ namespace WebStore.Clients.Services
     {
         public ProductsClient(IConfiguration configuration) : base (configuration)
         {
-            ServiceAddress = "api/productsapi";
+            ServiceAddress = "api/products";
         }
 
         protected sealed override String ServiceAddress { get; set; }

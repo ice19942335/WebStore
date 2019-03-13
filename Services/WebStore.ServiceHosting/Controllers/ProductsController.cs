@@ -13,11 +13,11 @@ namespace WebStore.ServiceHosting.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ProductsApiController : ControllerBase
+    public class ProductsController : ControllerBase
     {
         private readonly IProductData _productData;
 
-        public ProductsApiController(IProductData productData)
+        public ProductsController(IProductData productData)
         {
             _productData = productData;
         }

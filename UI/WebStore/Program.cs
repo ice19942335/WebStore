@@ -2,7 +2,10 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
+using System.Xml;
+using log4net;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -17,29 +20,27 @@ namespace WebStore
 {
     public class Program
     {
-        //public static void Main(string[] args)
-        //{
-        //    CreateWebHostBuilder(args).Build().Run();
-        //}
-
         public static void Main(string[] args)
         {
+            var log4NetConfigXml = new XmlDocument();
+
+            var configFileName = "log4net.config";
+
+            log4NetConfigXml.Load(configFileName);
+
+            var repository = LogManager.CreateRepository(
+                Assembly.GetEntryAssembly(),
+                typeof(log4net.Repository.Hierarchy.Hierarchy));
+
+            log4net.Config.XmlConfigurator.Configure(repository, log4NetConfigXml["log4net"]);
+
+            ILog log = LogManager.GetLogger(typeof(Program));
+
+
+            log.Info("Application started");
+
             var host = CreateWebHostBuilder(args).Build();
-            using (var scope = host.Services.CreateScope())
-            {
-                var services = scope.ServiceProvider;
-                try
-                {
-                    var context = services.GetRequiredService<WebStoreContext>();
-                    DbInitializer.Initialize(context);
-                    DbInitializer.InitializeIdentity(services);
-                }
-                catch (Exception ex)
-                {
-                    var logger = services.GetRequiredService<ILogger<Program>>();
-                    logger.LogError(ex, "An error occurred while seeding the database.");
-                }
-            }
+
 
             host.Run();
         }

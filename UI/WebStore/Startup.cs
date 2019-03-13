@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using SmartBreadcrumbs;
 using WebStore.Clients.Services;
 using WebStore.Clients.Services.Users;
@@ -92,8 +93,7 @@ namespace WebStore
             //BreadCrumbs
             services.UseBreadcrumbs(GetType().Assembly);
         }
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env,
-            IServiceProvider svp)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IServiceProvider svp)
         {
             if (env.IsDevelopment())
             {
