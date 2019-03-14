@@ -13,6 +13,7 @@ using WebStore.Clients.Services.Users;
 using WebStore.DAL.Context;
 using WebStore.Entities.Entities.Identity;
 using WebStore.Interfaces.services;
+using WebStore.Logger;
 using WebStore.Services.CookieCartService;
 using WebStore.Services.InMemory;
 using WebStore.Services.Sql;
@@ -93,8 +94,10 @@ namespace WebStore
             //BreadCrumbs
             services.UseBreadcrumbs(GetType().Assembly);
         }
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IServiceProvider svp)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IServiceProvider svp, ILoggerFactory log)
         {
+            log.AddLog4Net();
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

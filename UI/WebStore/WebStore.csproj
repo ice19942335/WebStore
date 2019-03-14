@@ -20,6 +20,7 @@
     <PackageReference Include="log4net" Version="2.0.8" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.1.1" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="2.2.0" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.1" />
     <PackageReference Include="Microsoft.Web.LibraryManager.Build" Version="1.0.172" />
     <PackageReference Include="SmartBreadcrumbs" Version="1.0.4.1" />
@@ -27,6 +28,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Common\WebStore.Entities\WebStore.Entities.csproj" />
+    <ProjectReference Include="..\..\Common\WebStore.Logger\WebStore.Logger.csproj" />
     <ProjectReference Include="..\..\Services\WebStore.Clients\WebStore.Clients.csproj" />
     <ProjectReference Include="..\..\Services\WebStore.DAL\WebStore.DAL.csproj" />
     <ProjectReference Include="..\..\Services\WebStore.Interfaces\WebStore.Interfaces.csproj" />
