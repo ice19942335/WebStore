@@ -16,6 +16,7 @@ using WebStore.Interfaces.services;
 using WebStore.Logger;
 using WebStore.Services.CookieCartService;
 using WebStore.Services.InMemory;
+using WebStore.Services.MiddleWare;
 using WebStore.Services.Sql;
 using WebStore.Services.Sql.Admin;
 
@@ -99,13 +100,22 @@ namespace WebStore
             log.AddLog4Net();
 
             if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
+                //app.UseDeveloperExceptionPage();
+                app.UseExceptionHandler("/Home/Error");
+            else
+                app.UseExceptionHandler("/Home/Error");
+
             // Добавляем расширение для использования статических файлов, т.к. appsettings.json - это статический файл
             app.UseStaticFiles();
+
             app.UseWelcomePage("/welcome");
+
             app.UseAuthentication();
+
+            app.UseStatusCodePagesWithRedirects("~/home/errorstatus/{0}");
+
+            app.UseMiddleware(typeof(ErrorHandlingMiddleware));
+
             // Добавляем обработку запросов в mvc-формате
             app.UseMvc(routes =>
             {

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Xml;
 using log4net;
-using log4net.Repository;
 using Microsoft.Extensions.Logging;
 
 
@@ -11,18 +10,15 @@ namespace WebStore.Logger
 {
     public class Log4NetLogger : ILogger
     {
-        private readonly string _name;
-        private readonly XmlElement _xmlElement;
         private readonly ILog _log;
-        private ILoggerRepository _loggerRepository;
+
         public Log4NetLogger(string name, XmlElement xmlElement)
         {
-            _name = name;
-            _xmlElement = xmlElement; _loggerRepository = LogManager.CreateRepository(
+            var loggerRepository = LogManager.CreateRepository(
                 Assembly.GetEntryAssembly(),
                 typeof(log4net.Repository.Hierarchy.Hierarchy));
-            _log = LogManager.GetLogger(_loggerRepository.Name, name);
-            log4net.Config.XmlConfigurator.Configure(_loggerRepository,
+            _log = LogManager.GetLogger(loggerRepository.Name, name);
+            log4net.Config.XmlConfigurator.Configure(loggerRepository,
                 xmlElement);
         }
         public IDisposable BeginScope<TState>(TState state)
