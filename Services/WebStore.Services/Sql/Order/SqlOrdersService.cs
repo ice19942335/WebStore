@@ -9,7 +9,7 @@ using WebStore.Entities.Entities;
 using WebStore.Entities.Entities.Identity;
 using WebStore.Interfaces.services;
 
-namespace WebStore.Services.Sql
+namespace WebStore.Services.Sql.Order
 {
     public class SqlOrdersService : IOrdersService
     {
@@ -68,7 +68,7 @@ namespace WebStore.Services.Sql
 
             using (var transaction = _context.Database.BeginTransaction())
             {
-                var order = new Order()
+                var order = new Entities.Entities.Order()
                 {
                     Address = orderModel.OrderViewModel.Address,
                     Name = orderModel.OrderViewModel.Name,

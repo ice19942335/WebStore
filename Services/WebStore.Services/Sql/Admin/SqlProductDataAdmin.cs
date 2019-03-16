@@ -22,7 +22,7 @@ namespace WebStore.Services.Sql.Admin
         {
             using (var transaction = _context.Database.BeginTransaction())
             {
-                var newProduct = new Product
+                var newProduct = new Entities.Entities.Product
                 {
                     Name = product.Name,
                     Order = _context.Products.Max(e => e.Order) + 1,
@@ -105,7 +105,7 @@ namespace WebStore.Services.Sql.Admin
             }
         }
 
-        public IQueryable<Product> GetAllProducts() => _context.Products;
+        public IQueryable<Entities.Entities.Product> GetAllProducts() => _context.Products;
 
         public bool FillListWithProductsDeleteLater()
         {

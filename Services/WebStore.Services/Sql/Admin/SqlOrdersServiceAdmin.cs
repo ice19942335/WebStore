@@ -16,7 +16,7 @@ namespace WebStore.Services.Sql.Admin
             _context = webStoreContext;
         }
 
-        public IQueryable<Order> GetAllOrdersList() => _context.Orders.Include("User");
+        public IQueryable<Entities.Entities.Order> GetAllOrdersList() => _context.Orders.Include("User");
 
         public OrderDetailsViewModel GetOrderById(int id) => new OrderDetailsViewModel
         {

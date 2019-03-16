@@ -21,6 +21,8 @@ using WebStore.Services.CookieCartService;
 using WebStore.Services.InMemory;
 using WebStore.Services.Sql;
 using WebStore.Services.Sql.Admin;
+using WebStore.Services.Sql.Order;
+using WebStore.Services.Sql.Product;
 
 namespace WebStore.ServiceHosting
 {

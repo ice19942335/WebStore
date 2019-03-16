@@ -7,7 +7,7 @@ using WebStore.Entities.Dto.Product;
 using WebStore.Entities.Entities;
 using WebStore.Interfaces.services;
 
-namespace WebStore.Services.Sql
+namespace WebStore.Services.Sql.Product
 
 {
     public class SqlProductData : IProductData
@@ -63,7 +63,9 @@ namespace WebStore.Services.Sql
         public ProductDto GetProductById(int id)
         {
             var product = _context.Products.Include("Brand").Include("Section").FirstOrDefault(p => p.Id.Equals(id));
+
             if (product == null) return null;
+
             var dto = new ProductDto()
             {
                 Id = product.Id,
@@ -74,6 +76,7 @@ namespace WebStore.Services.Sql
                 SectionId = product.SectionId,
                 BrandId = product.BrandId
             };
+
             if (product.Brand != null)
                 dto.Brand = new BrandDto()
                 {
@@ -81,6 +84,7 @@ namespace WebStore.Services.Sql
                     Name = product.Brand.Name,
                     Order = product.Brand.Order
                 };
+
             return dto;
         }
     }

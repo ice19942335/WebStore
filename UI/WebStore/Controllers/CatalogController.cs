@@ -47,6 +47,7 @@ namespace WebStore.Controllers
         public IActionResult ProductDetails(int id)
         {
             var product = _productData.GetProductById(id);
+
             if (product == null)
                 return NotFound();
 
@@ -57,7 +58,7 @@ namespace WebStore.Controllers
                 Name = product.Name,
                 Order = product.Order,
                 Price = product.Price,
-                Brand = new Brand() { Id = product.Id, Name = product.Name, Order = product.Order }
+                Brand = new Brand() { Id = product.Brand.Id, Name = product.Brand.Name, Order = product.Brand.Order }
             });
         }
     }
