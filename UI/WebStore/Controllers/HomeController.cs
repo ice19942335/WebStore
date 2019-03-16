@@ -17,8 +17,23 @@ namespace WebStore.Controllers
 
     public class HomeController : Controller
     {
+        private readonly IValuesService _valuesService;
+        public HomeController(IValuesService valuesService)
+        {
+            _valuesService = valuesService;
+        }
+
         [DefaultBreadcrumb("Home")]
-        public IActionResult Index() => View();
+        public async Task<IActionResult> Index()
+        {
+            //throw new InvalidOperationException();
+            var values = await _valuesService.GetAsync();
+            return View(values);
+        }
+
+
+        //[DefaultBreadcrumb("Home")]
+        //public IActionResult Index() => View();
 
         //[Breadcrumb("Checkout", FromAction = "Home.Cart")]
         [Breadcrumb("Checkout")]
@@ -39,7 +54,11 @@ namespace WebStore.Controllers
         {
             if (id == "404")
                 return RedirectToAction("NotFound404");
-            return Content($"Error status Code: {id}");
+
+            return Content($"Error status code: {id}");
         }
+
+        public IActionResult ValuesServiceTest([FromServices] IValuesService valueServices) =>
+            View(valueServices.Get());
     }
 }
