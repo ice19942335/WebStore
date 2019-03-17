@@ -71,7 +71,12 @@ namespace WebStore.Services.CookieCartService
                 Name = p.Name,
                 Order = p.Order,
                 Price = p.Price,
-                Brand = p.Brand ?? null
+                Brand = p.Brand == null ? null : new Brand()
+                {
+                    Id = p.Brand.Id,
+                    Name = p.Brand.Name,
+                    Order = p.Brand.Order
+                }
             }).ToList();
 
             var r = new CartViewModel

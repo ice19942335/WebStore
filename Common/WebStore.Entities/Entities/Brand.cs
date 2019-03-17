@@ -14,10 +14,5 @@ namespace WebStore.Entities.Entities
     public class Brand : NamedEntity, IOrderedEntity
     {
         public int Order { get; set; }
-
-        public static implicit operator Brand(BrandDto v)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
