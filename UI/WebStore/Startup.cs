@@ -14,6 +14,7 @@ using WebStore.DAL.Context;
 using WebStore.Entities.Entities.Identity;
 using WebStore.Interfaces.services;
 using WebStore.Logger;
+using WebStore.Services.Cart;
 using WebStore.Services.CookieCartService;
 using WebStore.Services.InMemory;
 using WebStore.Services.MiddleWare;
@@ -88,9 +89,13 @@ namespace WebStore
                 options.AccessDeniedPath = "/Account/AccessDenied";
                 options.SlidingExpiration = true;
             });
+
             // Настройки для корзины
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-            services.AddScoped<ICartService, CookieCartService>();
+
+            services.AddScoped<ICartStore, CookiesCartStore>();
+            services.AddScoped<ICartService, CartService>();
+
 
             //BreadCrumbs
             services.UseBreadcrumbs(GetType().Assembly);

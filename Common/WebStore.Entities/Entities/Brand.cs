@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
+using WebStore.Entities.Dto.Brand;
 using WebStore.Entities.Entities.Base;
 using WebStore.Entities.Entities.Base.Interfaces;
 
@@ -12,5 +14,10 @@ namespace WebStore.Entities.Entities
     public class Brand : NamedEntity, IOrderedEntity
     {
         public int Order { get; set; }
+
+        public static implicit operator Brand(BrandDto v)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

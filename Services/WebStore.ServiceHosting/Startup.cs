@@ -17,6 +17,7 @@ using WebStore.DAL.Context;
 using WebStore.Entities.Entities.Identity;
 using WebStore.Interfaces;
 using WebStore.Interfaces.services;
+using WebStore.Services.Cart;
 using WebStore.Services.CookieCartService;
 using WebStore.Services.InMemory;
 using WebStore.Services.Sql;
@@ -51,8 +52,11 @@ namespace WebStore.ServiceHosting
             services.AddScoped<IProductDataAdmin, SqlProductDataAdmin>();
             services.AddScoped<IOrdersServiceAdmin, SqlOrdersServiceAdmin>();
 
+            // Настройки для корзины
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>(); // Добавляем сервис доступа к контексту http-запроса для обеспечения возможности использования нашего сервиса работы с корзиной покупателя
-            services.AddScoped<ICartService, CookieCartService>();
+
+            services.AddScoped<ICartService, CartService>();
+            services.AddScoped<ICartStore, CookiesCartStore>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

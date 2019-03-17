@@ -7,6 +7,6 @@ namespace WebStore.Entities.ViewModels.Cart
     {
         public Dictionary<ProductViewModel, int> Items { get; set; } = new Dictionary<ProductViewModel, int>();
 
-        public int ItemsCoutn => Items?.Sum(e => e.Value) ?? 0;
+        public int ItemsCount => Items?.Sum(e => e.Value) ?? 0;
     }
 }
