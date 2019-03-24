@@ -39,13 +39,15 @@ namespace WebStore.Controllers
         public IActionResult DecrementFromCart(int id)
         {
             _cartService.DecrementFromCart(id);
-            return RedirectToAction("Details");
+            return Json(new {id, message = "Quantity of item reduced by 1" });
+            //return RedirectToAction("Details");
         }
 
         public IActionResult RemoveFromCart(int id)
         {
             _cartService.RemoveFromCart(id);
-            return RedirectToAction("Details");
+            return Json(new { id, message = $"Item ID:{id} removed from cart" });
+            //return RedirectToAction("Details");
         }
 
         public IActionResult RemoveAll()
@@ -54,14 +56,15 @@ namespace WebStore.Controllers
             return RedirectToAction("Details");
         }
 
-        public IActionResult AddToCart(int id, string returnUrl)
+        public IActionResult AddToCart(int id)
         {
             _cartService.AddToCart(id);
-            return Redirect(returnUrl);
+            return Json(new { id, message = "Product added to cart" });
         }
 
+        public IActionResult GetCartView() => ViewComponent("Cart");
+
         [HttpPost, ValidateAntiForgeryToken]
-        //public IActionResult CheckOut(OrderViewModel model, [FromServices] ILogger<CartController> logger)
         public IActionResult CheckOut(OrderViewModel model)
         {
             if (ModelState.IsValid)
@@ -79,14 +82,14 @@ namespace WebStore.Controllers
                         Quantity = productViewModel.Value
                     });
                 }
-                
+
                 CreateOrderModel orderModel = new CreateOrderModel()
                 {
                     OrderViewModel = model,
                     OrderItems = productDtoList
                 };
 
-                var orderResult = _ordersService.CreateOrder(orderModel,  User.Identity.Name);
+                var orderResult = _ordersService.CreateOrder(orderModel, User.Identity.Name);
                 _cartService.RemoveAll();
 
                 if (orderResult.Id.Equals(0)) //Will be true IF CreateOrder method will return a (New Order)
