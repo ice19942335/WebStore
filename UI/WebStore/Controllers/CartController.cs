@@ -39,7 +39,7 @@ namespace WebStore.Controllers
         public IActionResult DecrementFromCart(int id)
         {
             _cartService.DecrementFromCart(id);
-            return Json(new {id, message = "Quantity of item reduced by 1" });
+            return Json(new { id, message = "Quantity of item reduced by 1" });
             //return RedirectToAction("Details");
         }
 

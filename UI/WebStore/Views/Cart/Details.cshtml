@@ -41,22 +41,16 @@
                         </td>
                         <td class="cart_quantity">
                             <div class="cart_quantity_button">
-                                <a href="#" class="cart_quantity_up"
-                                   data-id="@item.Key.Id">+</a>
-                                <input class="cart_quantity_input" type="text"
-                                       name="quantity" value="@item.Value" autocomplete="off" size="2"><a href="#" class="cart_quantity_down"
-                                                                                                          data-id="@item.Key.Id">-</a>
+                                <a href="#" class="cart_quantity_up" data-id="@item.Key.Id">+</a>
+                                <input class="cart_quantity_input" type="text" name="quantity" value="@item.Value" autocomplete="off" size="2">
+                                <a href="#" class="cart_quantity_down" data-id="@item.Key.Id">-</a>
                             </div>
                         </td>
                         <td class="cart_total">
-                            <p class="cart_total_price">
-                                @((item.Value *
-                                           item.Key.Price).ToString("C"))
-                        </p>
+                            <p class="cart_total_price"> @((item.Value * item.Key.Price).ToString("C")) </p>
                     </td>
                     <td class="cart_delete">
-                        <a class="cart_quantity_delete"
-                           data-id="@item.Key.Id"><i class="fa fa-times"></i></a>
+                        <a class="cart_quantity_delete" data-id="@item.Key.Id"><i class="fa fa-times"></i></a>
                     </td>
                 </tr>
             }
