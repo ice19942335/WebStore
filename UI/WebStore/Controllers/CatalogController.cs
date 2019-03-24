@@ -27,52 +27,59 @@ namespace WebStore.Controllers
             _configuration = configuration;
         }
 
-
-        [Breadcrumb("Shop")]
         public IActionResult Shop(int? sectionId, int? brandId, int page = 1)
         {
-            var pageSize = int.Parse(_configuration["PageSize"]);
-
-            var products = _productData.GetProducts(new ProductFilter
-            {
-                SectionId = sectionId,
-                BrandId = brandId,
-                Page = page,
-                PageSize = pageSize
-            });
-
-            var model = new CatalogViewModel
+            var productsModel = GetProducts(sectionId, brandId, page, out var
+                totalCount);
+            var model = new CatalogViewModel()
             {
                 BrandId = brandId,
                 SectionId = sectionId,
-                Products = products.Products.Select(p => new ProductViewModel
+                Products = productsModel,
+                PageViewModel = new ProductsPageViewModel
                 {
-                    Id = p.Id,
-                    ImageUrl = p.ImageUrl,
-                    Name = p.Name,
-                    Order = p.Order,
-                    Price = p.Price,
-                    Brand = p.Brand != null ? new Brand() { Id = p.Brand.Id, Name = p.Brand.Name, Order = p.Brand.Order } : null
-                }).OrderBy(p => p.Order).ToList(),
-                PageViewModel = new ItemsPageViewModel
-                {
-                    PageSize = pageSize,
+                    PageSize = int.Parse(_configuration["PageSize"]),
                     PageNumber = page,
-                    TotalItems = products.TotalCount
+                    TotalItems = totalCount
                 }
             };
-
             return View(model);
         }
 
-        [Breadcrumb("Product details")]
+        public IActionResult GetFilteredItems(int? sectionId, int? brandId, int page = 1)
+        {
+            var productsModel = GetProducts(sectionId, brandId, page, out var totalCount);
+            return PartialView("_ProductItems", productsModel);
+        }
+
+        private IEnumerable<ProductViewModel> GetProducts(int? sectionId, int? brandId, int page, out int totalCount)
+        {
+            var products = _productData.GetProducts(new ProductFilter
+            {
+                BrandId = brandId,
+                SectionId = sectionId,
+                Page = page,
+                PageSize = int.Parse(_configuration["PageSize"])
+            });
+
+            totalCount = products.TotalCount;
+
+            return products.Products.Select(p => new ProductViewModel()
+            {
+                Id = p.Id,
+                ImageUrl = p.ImageUrl,
+                Name = p.Name,
+                Order = p.Order,
+                Price = p.Price,
+                Brand = p.Brand != null ? new Brand() { Id = p.Brand.Id, Order = p.Brand.Order, Name = p.Brand.Name } : null
+            }).ToList();
+        }
+
         public IActionResult ProductDetails(int id)
         {
             var product = _productData.GetProductById(id);
-
             if (product == null)
                 return NotFound();
-
             return View(new ProductViewModel
             {
                 Id = product.Id,
@@ -80,7 +87,7 @@ namespace WebStore.Controllers
                 Name = product.Name,
                 Order = product.Order,
                 Price = product.Price,
-                Brand = product != null ? new Brand() { Id = product.Brand.Id, Name = product.Brand.Name, Order = product.Brand.Order } : null
+                Brand = product.Brand != null ? new Brand(){ Id = product.Brand.Id, Order = product.Brand.Order, Name = product.Brand.Name} : null
             });
         }
     }

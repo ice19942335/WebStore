@@ -5,7 +5,7 @@ namespace WebStore.Entities.ViewModels.Page
     /// <summary>
     /// Модель постраничного разбития
     /// </summary>
-    public class ItemsPageViewModel
+    public class ProductsPageViewModel
     {
         /// <summary>
         /// Общее количество элементов
