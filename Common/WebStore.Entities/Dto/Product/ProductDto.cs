@@ -1,9 +1,10 @@
 ﻿using WebStore.Entities.Dto.Brand;
+using WebStore.Entities.Dto.Section;
 using WebStore.Entities.Entities.Base.Interfaces;
 
 namespace WebStore.Entities.Dto.Product
 {
-    public class ProductDto : INamedEntity, IOrderedEntity
+    public class ProductDto : INamedEntity
     {
         public int Id { get; set; }
         public string Name { get; set; }
@@ -13,5 +14,6 @@ namespace WebStore.Entities.Dto.Product
         public BrandDto Brand { get; set; }
         public int? SectionId { get; set; }
         public int? BrandId { get; set; }
+        public SectionDto Section { get; set; }
     }
 }

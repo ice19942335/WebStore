@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using WebStore.Entities.Dto.Brand;
+using WebStore.Entities.Dto.Page;
 using WebStore.Entities.Dto.Product;
+using WebStore.Entities.Dto.Section;
 using WebStore.Entities.Entities;
 using WebStore.Interfaces.services;
 
@@ -192,56 +194,88 @@ namespace WebStore.Services.InMemory
             return Section;
         }
 
+        public Section GetSectionById(int id)
+        {
+            throw new System.NotImplementedException();
+        }
+
         public IEnumerable<Brand> GetBrands()
         {
             return Brand;
         }
 
-        public IEnumerable<ProductDto> GetProducts(ProductFilter filter)
+        public Brand GetBrandById(int id)
         {
-            var products = Products;
-            if (filter.SectionId.HasValue)
-                products = products.Where(p => p.SectionId.Equals(filter.SectionId)).ToList();
-            if (filter.BrandId.HasValue)
-                products = products.Where(p => p.BrandId.HasValue && p.BrandId.Value.Equals(filter.BrandId.Value))
-                    .ToList();
+            throw new System.NotImplementedException();
+        }
 
-            return products.Select(p => new ProductDto()
+        public PagedProductDto GetProducts(ProductFilter filter)
+        {
+            var query = Products.AsQueryable();
+            if (filter.BrandId.HasValue)
+                query = query.Where(c => c.BrandId.HasValue &&
+                                         c.BrandId.Value.Equals(filter.BrandId.Value));
+            if (filter.SectionId.HasValue)
+                query = query.Where(c =>
+                    c.SectionId.Equals(filter.SectionId.Value));
+            var model = new PagedProductDto
             {
-                Id = p.Id,
-                Name = p.Name,
-                Order = p.Order,
-                Price = p.Price,
-                ImageUrl = p.ImageUrl,
-                Brand = p.BrandId.HasValue
-                    ? new BrandDto()
+                TotalCount = query.Count()
+            };
+            if (filter.PageSize.HasValue)
+            {
+                model.Products = query.OrderBy(c => c.Order).
+                    Skip((filter.Page - 1) * filter.PageSize.Value).
+                    Take(filter.PageSize.Value)
+                    .Select(p =>
+                        new ProductDto
+                        {
+                            Id = p.Id,
+                            Name = p.Name,
+                            Order = p.Order,
+                            Price = p.Price,
+                            ImageUrl = p.ImageUrl,
+                            Brand = p.BrandId.HasValue ? new BrandDto()
+                            {
+                                Id = p.Brand.Id,
+                                Name = p.Brand.Name
+                            } : null,
+                            Section = new SectionDto()
+                            {
+                                Id = p.Section.Id,
+                                Name = p.Section.Name
+                            }
+                        }).ToList();
+            }
+            else
+            {
+                model.Products = query.OrderBy(c => c.Order).Select(p =>
+                    new ProductDto
                     {
-                        Id = p.Brand.Id,
-                        Name = p.Brand.Name
-                    }
-                    : null
-            }).ToList();
+                        Id = p.Id,
+                        Name = p.Name,
+                        Order = p.Order,
+                        Price = p.Price,
+                        ImageUrl = p.ImageUrl,
+                        Brand = p.BrandId.HasValue ? new BrandDto()
+                        {
+                            Id =
+                                p.Brand.Id,
+                            Name = p.Brand.Name
+                        } : null,
+                        Section = new SectionDto()
+                        {
+                            Id = p.Section.Id,
+                            Name = p.Section.Name
+                        }
+                    }).ToList();
+            }
+            return model;
         }
 
         public ProductDto GetProductById(int id)
         {
-            var product = Products.FirstOrDefault(p => p.Id.Equals(id));
-            if (product == null) return null;
-            var dto = new ProductDto()
-            {
-                Id = product.Id,
-                Name = product.Name,
-                ImageUrl = product.ImageUrl,
-                Order = product.Order,
-                Price = product.Price
-            };
-            if (product.Brand != null)
-                dto.Brand = new BrandDto()
-                {
-                    Id = product.Brand.Id,
-                    Name = product.Brand.Name
-                };
-            return dto;
+            throw new System.NotImplementedException();
         }
     }
 }

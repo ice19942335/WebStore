@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using WebStore.Entities.ViewModels.Page;
 
 namespace WebStore.Entities.ViewModels
 {
@@ -6,8 +7,8 @@ namespace WebStore.Entities.ViewModels
     {
         public int? BrandId { get; set; }
         public int? SectionId { get; set; }
-
         public IEnumerable<ProductViewModel> Products { get; set; }
+        public ItemsPageViewModel PageViewModel { get; set; }
     }
 
 }

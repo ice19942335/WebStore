@@ -64,20 +64,21 @@ namespace WebStore.Services.CookieCartService
             var products = _productData.GetProducts(new ProductFilter()
             {
                 Ids = _cartStore.Cart.Items.Select(i => i.ProductId).ToList()
-            }).Select(p => new ProductViewModel()
-            {
-                Id = p.Id,
-                ImageUrl = p.ImageUrl,
-                Name = p.Name,
-                Order = p.Order,
-                Price = p.Price,
-                Brand = p.Brand == null ? null : new Brand()
+            }).Products
+                .Select(p => new ProductViewModel()
                 {
-                    Id = p.Brand.Id,
-                    Name = p.Brand.Name,
-                    Order = p.Brand.Order
-                }
-            }).ToList();
+                    Id = p.Id,
+                    ImageUrl = p.ImageUrl,
+                    Name = p.Name,
+                    Order = p.Order,
+                    Price = p.Price,
+                    Brand = p.Brand == null ? null : new Brand()
+                    {
+                        Id = p.Brand.Id,
+                        Name = p.Brand.Name,
+                        Order = p.Brand.Order
+                    }
+                }).ToList();
 
             var r = new CartViewModel
             {

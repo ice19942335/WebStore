@@ -5,6 +5,7 @@ using System.Text;
 using Microsoft.Extensions.Configuration;
 using WebStore.Clients.Base;
 using WebStore.Entities.Dto;
+using WebStore.Entities.Dto.Page;
 using WebStore.Entities.Dto.Product;
 using WebStore.Entities.Entities;
 using WebStore.Interfaces.services;
@@ -34,11 +35,11 @@ namespace WebStore.Clients.Services
             return resultt;
         }
 
-        public IEnumerable<ProductDto> GetProducts(ProductFilter filter)
+        public PagedProductDto GetProducts(ProductFilter filter)
         {
             var url = $"{ServiceAddress}";
             var response = Post(url, filter);
-            var result = response.Content.ReadAsAsync<IEnumerable<ProductDto>>().Result;
+            var result = response.Content.ReadAsAsync<PagedProductDto>().Result;
             return result;
         }
 
@@ -49,5 +50,14 @@ namespace WebStore.Clients.Services
             return result;
         }
 
+        public Section GetSectionById(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Brand GetBrandById(int id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
