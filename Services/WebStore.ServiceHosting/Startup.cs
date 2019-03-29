@@ -21,7 +21,6 @@ using WebStore.Services.Cart;
 using WebStore.Services.CookieCartService;
 using WebStore.Services.InMemory;
 using WebStore.Services.Sql;
-using WebStore.Services.Sql.Admin;
 using WebStore.Services.Sql.Order;
 using WebStore.Services.Sql.Product;
 
@@ -47,10 +46,6 @@ namespace WebStore.ServiceHosting
 
             services.AddScoped<IProductData, SqlProductData>();
             services.AddScoped<IOrdersService, SqlOrdersService>();
-
-            //Admin
-            services.AddScoped<IProductDataAdmin, SqlProductDataAdmin>();
-            services.AddScoped<IOrdersServiceAdmin, SqlOrdersServiceAdmin>();
 
             // Настройки для корзины
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>(); // Добавляем сервис доступа к контексту http-запроса для обеспечения возможности использования нашего сервиса работы с корзиной покупателя

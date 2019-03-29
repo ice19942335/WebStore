@@ -5,6 +5,7 @@ using WebStore.Entities.Dto.Page;
 using WebStore.Entities.Dto.Product;
 using WebStore.Entities.Dto.Section;
 using WebStore.Entities.Entities;
+using WebStore.Entities.ViewModels;
 using WebStore.Interfaces.services;
 
 namespace WebStore.Services.InMemory
@@ -274,6 +275,36 @@ namespace WebStore.Services.InMemory
         }
 
         public ProductDto GetProductById(int id)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public ProductViewModel Create(ProductViewModel product)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public bool ProductEdit(ProductViewModel model)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public bool ProductDelete(int id)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public ProductViewModel ProductDetails(int id)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public IQueryable<Product> GetAllProducts()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public bool FillListWithProductsDeleteLater()
         {
             throw new System.NotImplementedException();
         }

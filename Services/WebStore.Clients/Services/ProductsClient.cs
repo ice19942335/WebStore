@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Text;
 using Microsoft.Extensions.Configuration;
@@ -8,6 +9,7 @@ using WebStore.Entities.Dto;
 using WebStore.Entities.Dto.Page;
 using WebStore.Entities.Dto.Product;
 using WebStore.Entities.Entities;
+using WebStore.Entities.ViewModels;
 using WebStore.Interfaces.services;
 
 namespace WebStore.Clients.Services
@@ -56,6 +58,36 @@ namespace WebStore.Clients.Services
         }
 
         public Brand GetBrandById(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public ProductViewModel Create(ProductViewModel product)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool ProductEdit(ProductViewModel model)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool ProductDelete(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public ProductViewModel ProductDetails(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IQueryable<Product> GetAllProducts()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool FillListWithProductsDeleteLater()
         {
             throw new NotImplementedException();
         }

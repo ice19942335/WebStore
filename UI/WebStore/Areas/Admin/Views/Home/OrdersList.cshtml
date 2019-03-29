@@ -1,9 +1,10 @@
-﻿@using WebStore.Entities.Entities
+﻿@using WebStore.Entities.Dto.Order
+@using WebStore.Entities.Entities
 @model WebStore.Entities.ViewModels.Admin.OrdersListViewModel
 
 @{
     ViewData["Title"] = "Orders List";
-    Order orderExample = new Order();
+    OrderDto orderExample = new OrderDto();
 }
 
 <form method="get">

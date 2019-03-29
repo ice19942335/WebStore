@@ -3,14 +3,13 @@
 @model WebStore.Entities.ViewModels.Admin.OrderDetailsViewModel
 
 @{
-    var itemsList = Model.Order.OrderItems;
-    var itemsListAll = Model.OrderItemsList;
+    var orderItems = Model.Order.OrderItems.ToList();
 
     OrderItem orderItemExample = new OrderItem();
 }
 <hr>
 @{
-    if (Model.Order.OrderItems.Count > 0)
+    if (orderItems.Count > 0)
     {
         <table class="table">
             <thead>
@@ -28,30 +27,21 @@
             </thead>
             <tbody>
                 @{
-                    foreach (var item in itemsList)
+                    foreach (var item in orderItems)
                     {
-                        foreach (var itemFromAll in itemsListAll)
-                        {
-                            if (item.Id.Equals(itemFromAll.Id))
-                            {
-                                <tr>
-                                    <th>
-                                        @item.Price
-                                    </th>
-                                    <th>
-
-                                        @itemFromAll.Product.Name
-
-                                    </th>
-                                    <th>
-                                        @item.Quantity
-                                    </th>
-                                </tr>
-                            }
-                        }
+                        <tr>
+                            <th>
+                                @item.Price
+                            </th>
+                            <th>
+                                @item.Product.Name
+                            </th>
+                            <th>
+                                @item.Quantity
+                            </th>
+                        </tr>
                     }
                 }
-
             </tbody>
         </table>
     }

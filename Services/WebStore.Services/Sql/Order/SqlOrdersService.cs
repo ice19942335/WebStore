@@ -4,7 +4,9 @@ using System.Linq;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using WebStore.DAL.Context;
+using WebStore.Entities.Dto.Brand;
 using WebStore.Entities.Dto.Order;
+using WebStore.Entities.Dto.Product;
 using WebStore.Entities.Entities;
 using WebStore.Entities.Entities.Identity;
 using WebStore.Interfaces.services;
@@ -43,22 +45,35 @@ namespace WebStore.Services.Sql.Order
 
         public OrderDto GetOrderById(int id)
         {
-            var order = _context.Orders.Include("OrderItems").FirstOrDefault(o
-                => o.Id.Equals(id));
+            var order = _context.Orders.Include("User").Include("OrderItems").FirstOrDefault(o => o.Id.Equals(id));
+
             if (order == null) return null;
+
+            List<OrderItem> orderItems = new List<OrderItem>(order.OrderItems);
+
+            List<OrderItemDto> orderItemsDto = new List<OrderItemDto>();
+
+            foreach (var orderItem in orderItems)
+            {
+                orderItemsDto.Add(new OrderItemDto()
+                {
+                    Id = orderItem.Id,
+                    Order = orderItem.Order,
+                    Price = orderItem.Price,
+                    Product = orderItem.Product,
+                    Quantity = orderItem.Quantity
+                });
+            }
+
             return new OrderDto()
             {
                 Id = order.Id,
-                Name = order.Name,
                 Address = order.Address,
                 Date = order.Date,
+                Name = order.Name,
                 Phone = order.Phone,
-                OrderItems = order.OrderItems.Select(oi => new OrderItemDto()
-                {
-                    Id = oi.Id,
-                    Price = oi.Price,
-                    Quantity = oi.Quantity
-                })
+                User = order.User,
+                OrderItems = orderItemsDto
             };
         }
 
@@ -103,5 +118,75 @@ namespace WebStore.Services.Sql.Order
                 return GetOrderById(order.Id);
             }
         }
+
+        #region ForAdminMenu
+
+        public List<OrderDto> GetAllOrdersList()
+        {
+            List<Entities.Entities.Order> ordersList = new List<Entities.Entities.Order>(_context.Orders.Include("User").Include("OrderItems"));
+
+            List<OrderItem> orderItems = new List<OrderItem>(_context.OrderItems);
+
+            List<OrderDto> orderDtos = new List<OrderDto>();
+
+            List<OrderItemDto> orderItemDtos = new List<OrderItemDto>();
+
+            foreach (var orderItem in orderItems)
+            {
+                orderItemDtos.Add(new OrderItemDto()
+                {
+                    Id = orderItem.Quantity,
+                    Price = orderItem.Price,
+                    Quantity = orderItem.Quantity
+                });
+            }
+
+            foreach (var order in ordersList)
+            {
+                orderDtos.Add(new OrderDto()
+                {
+                    Id = order.Id,
+                    User = order.User,
+                    Address = order.Address,
+                    Date = order.Date,
+                    Name = order.Name,
+                    Phone = order.Phone,
+                    OrderItems = orderItemDtos
+                });
+            }
+
+            return orderDtos;
+        }
+
+        public bool DeleteOdrerById(int id)
+        {
+            using (var transaction = _context.Database.BeginTransaction())
+            {
+                var order = _context.Orders.Single(e => e.Id.Equals(id));
+
+                if (!ReferenceEquals(order, null))
+                {
+                    _context.Orders.Remove(order);
+                    _context.SaveChanges();
+                    transaction.Commit();
+                    return true;
+                }
+
+                _context.SaveChanges();
+                transaction.Commit();
+                return false;
+            }
+        }
+
+        // This is method from admin Interface with return type-OrderDetailsViewModel
+        /*
+         public OrderDetailsViewModel GetOrderById(int id) => new OrderDetailsViewModel
+         {
+            Order = _context.Orders.Include("User").Include("OrderItems").FirstOrDefault(e => e.Id.Equals(id)),
+            OrderItemsList = _context.OrderItems.Include("Product")
+         };
+        */
+
+        #endregion
     }
 }

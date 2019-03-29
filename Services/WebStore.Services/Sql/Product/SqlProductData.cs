@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using WebStore.DAL.Context;
@@ -7,7 +8,9 @@ using WebStore.Entities.Dto.Page;
 using WebStore.Entities.Dto.Product;
 using WebStore.Entities.Dto.Section;
 using WebStore.Entities.Entities;
+using WebStore.Entities.ViewModels;
 using WebStore.Interfaces.services;
+using WebStore.Services.InMemory;
 
 namespace WebStore.Services.Sql.Product
 
@@ -15,29 +18,35 @@ namespace WebStore.Services.Sql.Product
     public class SqlProductData : IProductData
     {
         private readonly WebStoreContext _context;
+
         public SqlProductData(WebStoreContext context)
         {
             _context = context;
         }
+
+        //----------------------------------------------------------------------------
+        //----------------------------------------------------------------------------
+        public Section GetSectionById(int id)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Brand GetBrandById(int id)
+        {
+            throw new System.NotImplementedException();
+        }
+        //----------------------------------------------------------------------------
+        //----------------------------------------------------------------------------
+
 
         public IEnumerable<Section> GetSections()
         {
             return _context.Sections.ToList();
         }
 
-        public Section GetSectionById(int id)
-        {
-            throw new System.NotImplementedException();
-        }
-
         public IEnumerable<Brand> GetBrands()
         {
             return _context.Brands.ToList();
-        }
-
-        public Brand GetBrandById(int id)
-        {
-            throw new System.NotImplementedException();
         }
 
         public PagedProductDto GetProducts(ProductFilter filter)
@@ -104,7 +113,6 @@ namespace WebStore.Services.Sql.Product
             return model;
         }
 
-
         public ProductDto GetProductById(int id)
         {
             var product = _context.Products.Include("Brand").Include("Section").FirstOrDefault(p => p.Id.Equals(id));
@@ -132,5 +140,150 @@ namespace WebStore.Services.Sql.Product
 
             return dto;
         }
+
+        #region AdminFunctions
+
+        public IQueryable<Entities.Entities.Product> GetAllProducts() => _context.Products;
+
+        public ProductViewModel ProductCreate(ProductViewModel product)
+        {
+            using (var transaction = _context.Database.BeginTransaction())
+            {
+                var newProduct = new Entities.Entities.Product
+                {
+                    Name = product.Name,
+                    Order = _context.Products.Max(e => e.Order) + 1,
+                    SectionId = product.SectionId,
+                    BrandId = product.BrandId,
+                    ImageUrl = product.ImageUrl,
+                    Price = product.Price
+                };
+
+                _context.Products.Add(newProduct);
+
+                _context.SaveChanges();
+                transaction.Commit();
+
+                product.Id = newProduct.Id;
+
+                return product;
+            }
+
+        }
+
+        public bool ProductEdit(ProductViewModel model)
+        {
+            using (var transaction = _context.Database.BeginTransaction())
+            {
+                var product = _context.Products.FirstOrDefault(e => e.Id.Equals(model.Id));
+
+                if (ReferenceEquals(product, null))
+                    return false;
+
+                product.Name = model.Name;
+                product.ImageUrl = model.ImageUrl;
+                product.Price = model.Price;
+                product.SectionId = model.SectionId.Equals(null) ? null : model.SectionId;
+                product.BrandId = model.BrandId.Equals(null) ? null : model.BrandId;
+
+                _context.SaveChanges();
+                transaction.Commit();
+            }
+
+            return true;
+        }
+
+        public ProductViewModel ProductDetails(int id)
+        {
+            var product = _context.Products.FirstOrDefault(e => e.Id.Equals(id));
+
+            if (ReferenceEquals(product, null))
+                return null;
+
+            ProductViewModel model = new ProductViewModel()
+            {
+                Name = product.Name,
+                Order = product.Order,
+                ImageUrl = product.ImageUrl,
+                Price = product.Price,
+                SectionId = product.SectionId.Equals(null) ? null : product.SectionId,
+                BrandId = product.BrandId.Equals(null) ? null : product.BrandId
+            };
+
+            return model;
+        }
+
+        public bool ProductDelete(int id)
+        {
+            using (var transaction = _context.Database.BeginTransaction())
+            {
+                var product = _context.Products.First(e => e.Id.Equals(id));
+
+                if (!ReferenceEquals(product, null))
+                {
+                    _context.Products.Remove(product);
+                    _context.SaveChanges();
+                    transaction.Commit();
+                    return true;
+                }
+                _context.SaveChanges();
+                transaction.Commit();
+                return false;
+            }
+        }
+
+        public bool FillListWithProductsDeleteLater()
+        {
+            var memoryData = new InMemoryProductData();
+
+            using (var transaction = _context.Database.BeginTransaction())
+            {
+                foreach (var product in memoryData.Products)
+                    _context.Products.Add(product);
+
+                try
+                {
+                    _context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT [dbo].[Products] ON");
+                    _context.SaveChanges();
+                    _context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT [dbo].[Products] OFF");
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
+
+                transaction.Commit();
+
+                return true;
+            }
+        }
+
+        public ProductViewModel Create(ProductViewModel product)
+        {
+            using (var transaction = _context.Database.BeginTransaction())
+            {
+                var newProduct = new Entities.Entities.Product
+                {
+                    Name = product.Name,
+                    Order = _context.Products.Max(e => e.Order) + 1,
+                    SectionId = product.SectionId,
+                    BrandId = product.BrandId,
+                    ImageUrl = product.ImageUrl,
+                    Price = product.Price
+                };
+
+                _context.Products.Add(newProduct);
+
+                _context.SaveChanges();
+                transaction.Commit();
+
+                product.Id = newProduct.Id;
+
+                return product;
+            }
+
+        }
+
+        #endregion
     }
 }
